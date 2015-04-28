@@ -1,0 +1,66 @@
+@CHARSET "ISO-8859-1";
+
+body {
+	font-size: 20px;
+	text-align: center;
+	background-color: grey;
+}
+
+#header {
+	background-color: lightgrey;
+	vertical-align: middle;
+}
+
+h3 {
+	font-family: cursive;
+	font-style: italic;
+}
+
+.link {
+	font-style: italic;
+	font-size: 10px;
+	font-color: blue;
+}
+
+.ui-widget-content {
+	border-color: lightgrey;
+}
+
+.ui-panelgrid .ui-panelgrid-cell {
+	border-color: lightgrey;
+}
+
+.btn-op {
+	vertical-align: middle;
+	border-color: red;
+	text-align: center;
+	font-size: 16pt;
+	font-weight: bold;
+	max-height: 40px;
+	min-height: 39px;
+	max-width: 100px;
+	min-width: 99px;
+}
+
+.btn-numb {
+	vertical-align: middle;
+	text-align: center;
+	font-size: 16pt;
+	font-weight: bold;
+	max-height: 40px;
+	min-height: 39px;
+	max-width: 100px;
+	min-width: 99px;
+}
+
+.btn-op-equal {
+	vertical-align: middle;
+	border-color: blue;
+	text-align: center;
+	font-size: 16pt;
+	font-weight: bold;
+	max-height: 40px;
+	min-height: 39px;
+	max-width: 100px;
+	min-width: 99px;
+}
