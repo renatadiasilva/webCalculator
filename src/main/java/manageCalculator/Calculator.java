@@ -15,13 +15,18 @@ public class Calculator implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String expression;
 	private boolean clean;
+	private boolean error;
 	
 	@Inject
 	private Historic hist;
 	
+	@Inject
+	private Statistics stat;
+	
 	public Calculator() {
 		expression = "0";
 		clean = true;
+		error = false;
 	}
 
 	public String getExpression() {
@@ -40,6 +45,14 @@ public class Calculator implements Serializable {
 		this.hist = hist;
 	}
 
+	public Statistics getStat() {
+		return stat;
+	}
+
+	public void setStat(Statistics stat) {
+		this.stat = stat;
+	}
+	
 	public void addToExpression(int code, String add) {
 		if (clean && code != 4) expression=add;
 		else {
@@ -64,12 +77,16 @@ public class Calculator implements Serializable {
 	public String result(int code, String func) {
 		
 		String ex = expression, s = "";
-		Expression e = new ExpressionBuilder(ex).build();
+		Expression e = new ExpressionBuilder("0").build();
 
-		if (code != 0) ex = func+"("+expression+")";
+		if (code != 0) {
+			if (!error) ex = func+"("+expression+")";
+			else return "Não pode calcular "+func+" de um erro!";
+		}
 			
 		e = new ExpressionBuilder(ex).build();
-		
+
+		error = false;
 		try{
 			double r = e.evaluate();
 		
@@ -78,9 +95,21 @@ public class Calculator implements Serializable {
 
 	    } catch(ArithmeticException ae){
 	    	s = "Erro: Divisão por zero!";
+	    	error = true;
+	    } catch(IllegalArgumentException ae) {
+	    	s = "Erro: Número inválido de operandos!";
+	    	error = true;
 	    }
+//		IllegalArgumentException (expressão vazia)
+		// parêntesis
 		
-		if (s.equals("NaN")) s = "Erro: Raiz de número negativo!";  //carregar a seguir ao erro (sqrt neg. e dp 1/x)
+		
+		if (s.equals("NaN")) {
+			error = true;
+			if (func == "log") s = "Erro: Logarítmo de um número não positivo!";
+			else if (func == "sqrt") s = "Erro: Raiz de número negativo!";
+			else s = "Erro: NaN!";
+		}
 		
 		// mais catchs
 		
@@ -112,17 +141,41 @@ public class Calculator implements Serializable {
 		case "number8": add = "8"; break;
 		case "number9": add = "9"; break;
 		case "decPoint": add = "."; break;
-		case "plus": add = "+"; break;
-		case "minus": add = "-"; break;
-		case "times": add = "*"; break;
-		case "divide": add = "/"; break;
+		case "plus": add = "+"; 
+			if (!error) stat.updateElement(0);
+			break;
+		case "minus": add = "-";
+			if (!error) stat.updateElement(1);
+			break;
+		case "times": add = "*";
+			if (!error) stat.updateElement(2);
+			break;
+		case "divide": add = "/"; 
+			if (!error) stat.updateElement(3);
+			break;
 //		case "percent": add = "%"; break; x ao quadrado
-		case "square": add = "^2"; break;
-		case "sqrt": add = result(4,"sqrt"); r = true; code = 4; hist.addToList(expression); break;  //tirar result ou ver exp
-		case "inverse": add = result(5,"1/"); r = true; code = 5; hist.addToList(expression); break;  //tirar result
+		case "sqrt": add = result(4,"sqrt"); 
+			r = true; 
+			code = 4; 
+			hist.addToList(expression);
+			if (!error) stat.updateElement(4);
+			break;  //tirar result ou ver exp
+		case "square": add = "^2"; 
+			if (!error) stat.updateElement(5);
+			break;
+		case "inverse": add = result(5,"1/");
+			r = true; 
+			code = 5; 
+			hist.addToList(expression); 
+			if (!error) stat.updateElement(6);
+			break;  //tirar result
 		case "deleteL": code = 2; break;
 		case "reset": add = "0"; code = 1; break;
-		case "result": add = result(0,""); r = true; code = 1; hist.addToList(expression); break;
+		case "result": add = result(0,"");
+			r = true;
+			code = 1;
+			hist.addToList(expression);
+			break;
 		}
 		
 		// meter expressão em cima? tirar +/-
@@ -134,7 +187,7 @@ public class Calculator implements Serializable {
 		else clean = false;
 			
 	}
-	
+
 	//limpar 0 e dp meter operação...
 
 }

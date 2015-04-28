@@ -64,12 +64,14 @@
 			actionListener="#{calculator.key}" />
 		<br />
 		<br />
-		<ui:repeat value="#{calculator.hist.list}" var="exp">
+		<ui:repeat value="#{calculator.hist.list}" var="exp" >
 		#{exp}<br />
 		</ui:repeat>
-
-		
-		
+		<br />
+		<ui:repeat value="#{calculator.stat.list}" var="func" >
+		#{func.id} #{func.name} #{func.count} <br />
+		</ui:repeat>
+		<br />		
 		
 	</h:form>
 
