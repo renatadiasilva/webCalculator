@@ -18,90 +18,96 @@
 			<h:form>
 				<div class="ui-grid ui-grid-responsive">
 
-					
-						<div class="ui-grid-col-4">4colunas</div>
-						<div class="ui-grid-col-4">
-							<p:panelGrid columns="1" layout="grid">
 
-								<p:inputTextarea id="input" read-only="true" />
+					<div class="ui-grid-col-4">4colunas</div>
+					<div class="ui-grid-col-4">
+						<p:panelGrid columns="3" layout="grid">
 
-							</p:panelGrid>
-							<p:panelGrid columns="4" layout="grid">
+							<p:inputTextarea id="basicdisplay"
+								styleClass="textareabasicdisplay" readonly="true" />
+							<p:commandButton class="btn-CCE"
+								actionListener="#{buttonView.buttonAction}" id="c" value="C"
+								title="C" />
+							<p:commandButton class="btn-CCE"
+								actionListener="#{buttonView.buttonAction}" id="ce" value="CE"
+								title="CE" />
+						</p:panelGrid>
+						<p:panelGrid columns="4" layout="grid">
 
+							<p:commandButton class="btn-numb"
+								actionListener="#{buttonView.buttonAction}" id="number1"
+								value="1" title="1" />
+
+							<p:commandButton class="btn-numb"
+								actionListener="#{buttonView.buttonAction}" id="number2"
+								value="2" title="2" />
+
+							<p:commandButton class="btn-numb"
+								actionListener="#{buttonView.buttonAction}" id="number3"
+								value="3" title="3" />
+
+							<p:commandButton class="btn-op"
+								actionListener="#{buttonView.buttonAction}" id="plus" value="+"
+								title="plus" />
+
+							<p:commandButton class="btn-numb"
+								actionListener="#{buttonView.buttonAction}" id="number4"
+								value="4" title="4" />
+
+							<p:commandButton class="btn-numb"
+								actionListener="#{buttonView.buttonAction}" id="number5"
+								value="5" title="5" />
+
+							<p:commandButton class="btn-numb"
+								actionListener="#{buttonView.buttonAction}" id="number6"
+								value="6" title="6" />
+
+							<p:commandButton class="btn-op"
+								actionListener="#{buttonView.buttonAction}" id="minus" value="-"
+								title="minus" />
+
+							<p:commandButton class="btn-numb"
+								actionListener="#{buttonView.buttonAction}" id="number7"
+								value="7" title="7" />
+
+							<p:commandButton class="btn-numb"
+								actionListener="#{buttonView.buttonAction}" id="number8"
+								value="8" title="8" />
+
+							<p:commandButton class="btn-numb"
+								actionListener="#{buttonView.buttonAction}" id="number9"
+								value="9" title="9" />
+
+							<p:commandButton class="btn-op"
+								actionListener="#{buttonView.buttonAction}" id="multiply"
+								value="*" title="multiply" />
+
+							<p:column colspan="3">
 								<p:commandButton class="btn-numb"
-									actionListener="#{buttonView.buttonAction}" id="number1"
-									value="1" title="1" />
+									actionListener="#{buttonView.buttonAction}" id="number0"
+									value="0" title="0" />
+							</p:column>
+							<p:commandButton class="btn-op"
+								actionListener="#{buttonView.buttonAction}" id="dot" value="."
+								title="dot" />
 
-								<p:commandButton class="btn-numb"
-									actionListener="#{buttonView.buttonAction}" id="number2"
-									value="2" title="2" />
+							<p:commandButton class="btn-op"
+								actionListener="#{buttonView.buttonAction}" id="divide"
+								value="/" title="divide" />
 
-								<p:commandButton class="btn-numb"
-									actionListener="#{buttonView.buttonAction}" id="number3"
-									value="3" title="3" />
+							<p:commandButton class="btn-op-equal"
+								actionListener="#{buttonView.buttonAction}" id="equal" value="="
+								title="equal" />
+						</p:panelGrid>
+						<p:panelGrid columns="1" layout="grid">
 
-								<p:commandButton class="btn-op"
-									actionListener="#{buttonView.buttonAction}" id="plus" value="+"
-									title="plus" />
+							<p:link id="link" outcome="productDetail" value="Scientific">
+								<f:param name="productId" value="10" />
+							</p:link>
+						</p:panelGrid>
+					</div>
+					<div class="ui-grid-col-4">4colunas</div>
 
-								<p:commandButton class="btn-numb"
-									actionListener="#{buttonView.buttonAction}" id="number4"
-									value="4" title="4" />
-
-								<p:commandButton class="btn-numb"
-									actionListener="#{buttonView.buttonAction}" id="number5"
-									value="5" title="5" />
-
-								<p:commandButton class="btn-numb"
-									actionListener="#{buttonView.buttonAction}" id="number6"
-									value="6" title="6" />
-
-								<p:commandButton class="btn-op"
-									actionListener="#{buttonView.buttonAction}" id="minus"
-									value="-" title="minus" />
-
-								<p:commandButton class="btn-numb"
-									actionListener="#{buttonView.buttonAction}" id="number7"
-									value="7" title="7" />
-
-								<p:commandButton class="btn-numb"
-									actionListener="#{buttonView.buttonAction}" id="number8"
-									value="8" title="8" />
-
-								<p:commandButton class="btn-numb"
-									actionListener="#{buttonView.buttonAction}" id="number9"
-									value="9" title="9" />
-
-								<p:commandButton class="btn-op"
-									actionListener="#{buttonView.buttonAction}" id="multiply"
-									value="*" title="multiply" />
-
-								<p:column colspan="3">
-									<p:commandButton class="btn-numb"
-										actionListener="#{buttonView.buttonAction}" id="number0"
-										value="0" title="0" />
-								</p:column>
-								<p:commandButton class="btn-op"
-									actionListener="#{buttonView.buttonAction}" id="dot" value="."
-									title="dot" />
-
-								<p:commandButton class="btn-op"
-									actionListener="#{buttonView.buttonAction}" id="divide"
-									value="/" title="divide" />
-
-								<p:commandButton class="btn-op-equal"
-									actionListener="#{buttonView.buttonAction}" id="equal"
-									value="=" title="equal" />
-							</p:panelGrid>
-							<p:panelGrid columns="1" layout="grid">
-								
-								<p:link id="link" outcome="productDetail" value="Scientific">
-									<f:param name="productId" value="10" />
-								</p:link>
-							</p:panelGrid>
-						</div>
-						<div class="ui-grid-col-4">4colunas</div>
-					
 				</div>
 			</h:form>
 		</div>

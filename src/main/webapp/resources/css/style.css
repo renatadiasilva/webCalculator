@@ -64,3 +64,15 @@ h3 {
 	max-width: 100px;
 	min-width: 99px;
 }
+.btn-CCE{
+	vertical-align: bottom;
+	border-color:red;
+	text-align: center;
+	font-size: 16pt;
+	font-weight: bold;
+	max-height: 40px;
+	min-height: 39px;
+	max-width: 70px;
+	min-width: 69px;
+	
+}
