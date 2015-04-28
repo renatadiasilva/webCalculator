@@ -3,63 +3,74 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Calculator</title>
 </h:head>
 <h:body>
 	<h:form>
-		<h:inputText readonly="true" value="#{calculator.expression}" />
+		<h:inputText label="écran" size="100" readonly="true" value="#{calculator.expression}" />
 		<br />
 		<br />
 
-		<h:commandButton id="number0" value="0"
-			actionListener="#{calculator.key}" />
 		<h:commandButton id="number1" value="1"
 			actionListener="#{calculator.key}" />
 		<h:commandButton id="number2" value="2"
 			actionListener="#{calculator.key}" />
-		<br />
 		<h:commandButton id="number3" value="3"
 			actionListener="#{calculator.key}" />
+		<br />
 		<h:commandButton id="number4" value="4"
 			actionListener="#{calculator.key}" />
 		<h:commandButton id="number5" value="5"
 			actionListener="#{calculator.key}" />
-		<br />
 		<h:commandButton id="number6" value="6"
 			actionListener="#{calculator.key}" />
+		<br />
 		<h:commandButton id="number7" value="7"
 			actionListener="#{calculator.key}" />
 		<h:commandButton id="number8" value="8"
 			actionListener="#{calculator.key}" />
-		<br />
 		<h:commandButton id="number9" value="9"
+			actionListener="#{calculator.key}" />
+		<br />
+		<h:commandButton id="number0" value="0"
 			actionListener="#{calculator.key}" />
 		<h:commandButton id="decPoint" value="."
 			actionListener="#{calculator.key}" />
-		<h:commandButton id="plusMinus" value="&plusmn;"
-			actionListener="#{calculator.key}" />
 		<h:commandButton id="plus" value="+"
 			actionListener="#{calculator.key}" />
+		<br />
 		<h:commandButton id="minus" value="-"
 			actionListener="#{calculator.key}" />
+		<h:commandButton id="times" value="&times;"
+			actionListener="#{calculator.key}" />
+		<h:commandButton id="divide" value="&divide;"
+			actionListener="#{calculator.key}" />
 		<br />
+		<h:commandButton id="square" value="x&sup2;"
+			actionListener="#{calculator.key}" />		
 		<h:commandButton id="sqrt" value="&radic;"
 			actionListener="#{calculator.key}" />
 		<h:commandButton id="inverse" value="1/x"
 			actionListener="#{calculator.key}" />
-		<h:commandButton id="times" value="*"
-			actionListener="#{calculator.key}" />
-		<h:commandButton id="divide" value="/"
-			actionListener="#{calculator.key}" />
-		<h:commandButton id="deleteL" value="CE"
+		<br />
+		<h:commandButton id="deleteL" value="&larr;"
 			actionListener="#{calculator.key}" />
 		<h:commandButton id="reset" value="C"
 			actionListener="#{calculator.key}" />
-		<br />
 		<h:commandButton id="result" value="="
 			actionListener="#{calculator.key}" />
+		<br />
+		<br />
+		<ui:repeat value="#{calculator.hist.list}" var="exp">
+		#{exp}<br />
+		</ui:repeat>
+
+		
+		
+		
 	</h:form>
 
 	<div class="messagecolor">
@@ -67,6 +78,5 @@
 			errorStyle="color: #d20005" infoStyle="color: blue" />
 	</div>
 	
-<!-- 	qq coisa -->
 </h:body>
 </html>
