@@ -1,12 +1,12 @@
 package manageCalculator;
 
-public class Function {
+public class FunctionS implements Comparable<FunctionS>{
 	
 	private int id;
 	private String name;
 	private int count;
 	
-	public Function(int i, String n) {
+	public FunctionS(int i, String n) {
 		id = i;
 		count = 0;
 		name = n;
@@ -34,6 +34,11 @@ public class Function {
 	
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	@Override
+	public int compareTo(FunctionS f) {
+		return f.count-count;
 	}
 	
 }
