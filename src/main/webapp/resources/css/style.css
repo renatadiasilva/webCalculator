@@ -16,7 +16,7 @@ h3 {
 	font-style: italic;
 }
 
-.link {
+#change {
 	font-style: italic;
 	font-size: 10px;
 	font-color: blue;
@@ -29,7 +29,9 @@ h3 {
 .ui-panelgrid .ui-panelgrid-cell {
 	border-color: lightgrey;
 }
-
+.ui-grid-row{
+	align-items:baseline;
+}
 .btn-op {
 	vertical-align: middle;
 	border-color: red;
@@ -56,6 +58,8 @@ h3 {
 .btn-op-equal {
 	vertical-align: middle;
 	border-color: blue;
+		background-color:blue;
+	
 	text-align: center;
 	font-size: 16pt;
 	font-weight: bold;
@@ -65,14 +69,8 @@ h3 {
 	min-width: 99px;
 }
 .btn-CCE{
-	vertical-align: bottom;
-	border-color:red;
-	text-align: center;
-	font-size: 16pt;
-	font-weight: bold;
-	max-height: 40px;
+	
 	min-height: 39px;
-	max-width: 70px;
-	min-width: 69px;
+	min-width: 69px; 
 	
 }
