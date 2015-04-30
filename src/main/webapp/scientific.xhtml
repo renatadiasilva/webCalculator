@@ -14,8 +14,8 @@
 	style="background-image: url('resources/images/grey_background.jpg'); ">
 	<div id="page">
 		<div id="header">
-			<br />
-			<h3>Scientific Calculator</h3>
+			<p id="titulo">Scientific Calculator</p>
+			<p id="titulo2">Developed by: Rafaela Lourenço &#38; Renata Silva</p>
 			<p:link id="change" outcome="basic"
 				value="Change to basic calculator">
 			</p:link>
@@ -25,12 +25,10 @@
 		<h:form>
 			<div class="ui-grid ui-grid-responsive">
 				<div class="ui-grid-col-4">
-					<h4>History</h4>
-
-
 					<p:dataTable class="table" var="exp"
 						value="#{calculator.hist.list}">
-						<p:column class="left-col" headerText="Expressions">
+						<f:facet name="header">History</f:facet>
+						<p:column class="left-col">
 							<h:outputText value="#{exp}" />
 						</p:column>
 					</p:dataTable>
@@ -48,8 +46,6 @@
 								actionListener="#{calculator.key}" id="deleteL" value="&#8592;"
 								title="delete last digit" />
 						</p:column>
-
-
 					</p:panelGrid>
 					<p:panelGrid columns="4" layout="grid" style="padding-top:5px">
 						<h:commandButton class="btn-numb" action="scientific"
@@ -60,7 +56,6 @@
 							actionListener="#{calculator.key}" id="number3" value="3" />
 						<h:commandButton class="btn-op" action="scientific"
 							actionListener="#{calculator.key}" id="plus" value="+" />
-
 						<h:commandButton class="btn-numb" action="scientific"
 							actionListener="#{calculator.key}" id="number4" value="4" />
 						<h:commandButton class="btn-numb" action="scientific"
@@ -90,14 +85,13 @@
 
 					</p:panelGrid>
 
-					<p:panelGrid columns="2" layoute="grid" style="padding-top:5px">
+					<p:panelGrid columns="1" layout="grid"
+						style="padding-top:5px; left:20%;">
 						<p:selectOneRadio id="btn-radio" value="#{calculator.radians}"
 							onchange="submit()">
 							<f:selectItem itemLabel="Radians" itemValue="true" />
 							<f:selectItem itemLabel="Degrees" itemValue="false" />
-
 						</p:selectOneRadio>
-
 					</p:panelGrid>
 
 
@@ -180,9 +174,10 @@
 
 				</div>
 				<div class="ui-grid-col-4">
-					<h4>Statistics</h4>
+
 					<p:dataTable class="table" var="func"
 						value="#{calculator.stat.list}">
+						<f:facet name="header">Statistics</f:facet>
 						<p:column class="left-col" headerText="Operation">
 							<h:outputText value="#{func.name}" />
 						</p:column>

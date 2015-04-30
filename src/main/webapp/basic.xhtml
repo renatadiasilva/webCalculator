@@ -16,8 +16,9 @@
 
 	<div id="page">
 		<div id="header">
-			<br />
+
 			<p id="titulo">Basic Calculator</p>
+			<p id="titulo2">Developed by: Rafaela Lourenço &#38; Renata Silva</p>
 			<p:link id="change" outcome="scientific"
 				value="Change to scientific calculator">
 			</p:link>
@@ -26,12 +27,10 @@
 			<h:form>
 				<div class="ui-grid ui-grid-responsive">
 					<div class="ui-grid-col-4">
-						<h4>History</h4>
-
-
 						<p:dataTable class="table" var="exp"
 							value="#{calculator.hist.list}">
-							<p:column class="left-col" headerText="Expressions">
+							<f:facet name="header">History</f:facet>
+							<p:column class="left-col">
 								<h:outputText value="#{exp}" />
 							</p:column>
 						</p:dataTable>
@@ -96,9 +95,10 @@
 					</div>
 
 					<div class="ui-grid-col-4">
-						<h4>Statistics</h4>
+
 						<p:dataTable class="table" var="func"
 							value="#{calculator.stat.list}">
+							<f:facet name="header">Statistics</f:facet>
 							<p:column class="left-col" headerText="Operation">
 								<h:outputText value="#{func.name}" />
 							</p:column>
