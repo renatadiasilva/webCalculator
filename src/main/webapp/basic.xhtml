@@ -8,7 +8,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 
-
+	<title>Basic Calculator</title>
 	<link type="text/css" rel="stylesheet" href="resources/css/style.css" />
 </h:head>
 <h:body
@@ -26,11 +26,17 @@
 			<h:form>
 				<div class="ui-grid ui-grid-responsive">
 					<div class="ui-grid-col-4">
-						<h4>Histórico das operações</h4>
-						<br />
-						<ui:repeat value="#{calculator.hist.list}" var="exp">
-		#{exp}<br />
-						</ui:repeat>
+						<h4>History</h4>
+
+
+						<p:dataTable class="table" var="exp"
+							value="#{calculator.hist.list}">
+							<p:column class="left-col" headerText="Expressions">
+								<h:outputText value="#{exp}" />
+							</p:column>
+						</p:dataTable>
+
+
 					</div>
 					<div class="ui-grid-col-4">
 						<p:panelGrid columns="1" layout="grid">
@@ -40,65 +46,49 @@
 							<p:column rowspan="2">
 								<h:commandButton class="btn-CCE" action="basic"
 									actionListener="#{calculator.key}" id="reset" value="C"
-									title="reset" />
+									title="delete expression" />
 								<h:commandButton class="btn-CCE" action="basic"
 									actionListener="#{calculator.key}" id="deleteL" value="&#8592;"
-									title="delete" />
+									title="delete last digit" />
 							</p:column>
 						</p:panelGrid>
 						<p:panelGrid columns="4" layout="grid" style="padding-top:5px">
 
 							<h:commandButton class="btn-numb" action="basic"
-								actionListener="#{calculator.key}" id="number1" value="1"
-								title="1" />
+								actionListener="#{calculator.key}" id="number1" value="1" />
 							<h:commandButton class="btn-numb" action="basic"
-								actionListener="#{calculator.key}" id="number2" value="2"
-								title="2" />
+								actionListener="#{calculator.key}" id="number2" value="2" />
 							<h:commandButton class="btn-numb" action="basic"
-								actionListener="#{calculator.key}" id="number3" value="3"
-								title="3" />
+								actionListener="#{calculator.key}" id="number3" value="3" />
 							<h:commandButton class="btn-op" action="basic"
-								actionListener="#{calculator.key}" id="plus" value="+"
-								title="plus" />
+								actionListener="#{calculator.key}" id="plus" value="+" />
 
 							<h:commandButton class="btn-numb" action="basic"
-								actionListener="#{calculator.key}" id="number4" value="4"
-								title="4" />
+								actionListener="#{calculator.key}" id="number4" value="4" />
 							<h:commandButton class="btn-numb" action="basic"
-								actionListener="#{calculator.key}" id="number5" value="5"
-								title="5" />
+								actionListener="#{calculator.key}" id="number5" value="5" />
 							<h:commandButton class="btn-numb" action="basic"
-								actionListener="#{calculator.key}" id="number6" value="6"
-								title="6" />
+								actionListener="#{calculator.key}" id="number6" value="6" />
 							<h:commandButton class="btn-op" action="basic"
-								actionListener="#{calculator.key}" id="minus" value="-"
-								title="minus" />
+								actionListener="#{calculator.key}" id="minus" value="-" />
 
 							<h:commandButton class="btn-numb" action="basic"
-								actionListener="#{calculator.key}" id="number7" value="7"
-								title="7" />
+								actionListener="#{calculator.key}" id="number7" value="7" />
 							<h:commandButton class="btn-numb" action="basic"
-								actionListener="#{calculator.key}" id="number8" value="8"
-								title="8" />
+								actionListener="#{calculator.key}" id="number8" value="8" />
 							<h:commandButton class="btn-numb" action="basic"
-								actionListener="#{calculator.key}" id="number9" value="9"
-								title="9" />
+								actionListener="#{calculator.key}" id="number9" value="9" />
 							<h:commandButton class="btn-op" action="basic"
-								actionListener="#{calculator.key}" id="times" value="&#215;"
-								title="multiply" />
+								actionListener="#{calculator.key}" id="times" value="&#215;" />
 
 							<h:commandButton class="btn-numb" action="basic"
-								actionListener="#{calculator.key}" id="number0" value="0"
-								title="0" />
+								actionListener="#{calculator.key}" id="number0" value="0" />
 							<h:commandButton class="btn-op" action="basic"
-								actionListener="#{calculator.key}" id="decPoint" value="."
-								title="dot" />
+								actionListener="#{calculator.key}" id="decPoint" value="." />
 							<h:commandButton class="btn-op" action="basic"
-								actionListener="#{calculator.key}" id="divide" value="&#247;"
-								title="divide" />
+								actionListener="#{calculator.key}" id="divide" value="&#247;" />
 							<h:commandButton class="btn-op-equal" action="basic"
-								actionListener="#{calculator.key}" id="result" value="="
-								title="equal" />
+								actionListener="#{calculator.key}" id="result" value="=" />
 
 						</p:panelGrid>
 
@@ -106,11 +96,18 @@
 					</div>
 
 					<div class="ui-grid-col-4">
-						<h4>Estatística das operações</h4>
-						<br />
-						<ui:repeat value="#{calculator.stat.list}" var="func">
-						#{func.name} #{func.count} <br />
-						</ui:repeat>
+						<h4>Statistics</h4>
+						<p:dataTable class="table" var="func"
+							value="#{calculator.stat.list}">
+							<p:column class="left-col" headerText="Name">
+								<h:outputText value="#{func.name}" />
+							</p:column>
+
+							<p:column headerText="Count">
+								<h:outputText value="#{func.count}" />
+							</p:column>
+
+						</p:dataTable>
 					</div>
 
 				</div>
