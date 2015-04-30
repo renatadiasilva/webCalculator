@@ -2,21 +2,12 @@ package manageCalculator;
 
 public class FunctionS implements Comparable<FunctionS>{
 	
-	private int id;
 	private String name;
-	private int count = 0;
+	private int count;
 	
-	public FunctionS(int i, String n) {
-		id = i;
+	public FunctionS(String n, int c) {
 		name = n;
-	}
-	
-	public int getId() {
-		return id;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
+		count = c;
 	}
 	
 	public String getName() {

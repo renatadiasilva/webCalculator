@@ -10,7 +10,7 @@
 </h:head>
 <h:body>
 	<h:form>
-		<h:inputText title="écran" size="100" value="#{calculator.expression}" />
+		<h:inputTextarea title="écran" value="#{calculator.expression}" />
 		<br />
 		<br />
 
@@ -74,7 +74,7 @@
 			actionListener="#{calculator.key}" />		
 		<h:commandButton id="cbrt" value="&#8731;"
 			actionListener="#{calculator.key}" />
-		<h:commandButton id="dMod" title="division remainder" value="mod"
+		<h:commandButton id="mod" title="division remainder" value="mod"
 			actionListener="#{calculator.key}" />
 		<br />
 		<h:commandButton id="sine" value="sin"
@@ -91,23 +91,23 @@
 		<h:commandButton id="tangentD" value="tanD"
 			actionListener="#{calculator.key}" />
 		<br />
-		<h:commandButton id="arcSine" value="sin^-1"
+		<h:commandButton id="arcsine" value="sin^-1"
 			actionListener="#{calculator.key}" />		
-		<h:commandButton id="arcCosine" value="cos^-1"
+		<h:commandButton id="arccosine" value="cos^-1"
 			actionListener="#{calculator.key}" />
-		<h:commandButton id="arcTangent" value="tan^-1"
+		<h:commandButton id="arctangent" value="tan^-1"
 			actionListener="#{calculator.key}" />
 		<br />
-		<h:commandButton id="arcSineD" value="sinD^-1"
+		<h:commandButton id="arcsineD" value="sinD^-1"
 			actionListener="#{calculator.key}" />		
-		<h:commandButton id="arcCosineD" value="cosD^-1"
+		<h:commandButton id="arccosineD" value="cosD^-1"
 			actionListener="#{calculator.key}" />
-		<h:commandButton id="arcTangentD" value="tanD^-1"
+		<h:commandButton id="arctangentD" value="tanD^-1"
 			actionListener="#{calculator.key}" />
 		<br />
-		<h:commandButton id="natLog" value="ln"
+		<h:commandButton id="ln" value="ln"
 			actionListener="#{calculator.key}" />		
-		<h:commandButton id="log10" value="log"
+		<h:commandButton id="log" value="log"
 			actionListener="#{calculator.key}" />
 		<h:commandButton id="logb" value="log_b"
 			actionListener="#{calculator.key}" />
@@ -119,7 +119,7 @@
 		<h:commandButton id="pi" value="&#960;"
 			actionListener="#{calculator.key}" />
 		<br />
-		<h:commandButton id="fact" value="n!"
+		<h:commandButton id="factorial" value="n!"
 			actionListener="#{calculator.key}" />		
 		<h:commandButton id="mdc" value="mdc"
 			actionListener="#{calculator.key}" />
@@ -132,7 +132,7 @@
 		</ui:repeat>
 		<br />
 		<ui:repeat value="#{calculator.stat.list}" var="func" >
-		#{func.id} #{func.name} #{func.count} <br />
+		#{func.name} #{func.count} <br />
 		</ui:repeat>
 		<br />		
 		

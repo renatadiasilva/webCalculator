@@ -2,6 +2,8 @@ package manageCalculator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
@@ -10,90 +12,55 @@ import javax.inject.Named;
 @ApplicationScoped
 public class Statistics {
 		
-	private ArrayList<FunctionS> list;
+	HashMap<String, Integer> list =  new HashMap<String, Integer>();
 
 	public Statistics() {
-		list = new ArrayList<>();
-
-		int cf = 0;
-		list.add(new FunctionS(cf, "plus"));
-		cf++;
-		list.add(new FunctionS(cf, "minus"));
-		cf++;
-		list.add(new FunctionS(cf, "times"));
-		cf++;
-		list.add(new FunctionS(cf, "divides"));
-		cf++;
-		list.add(new FunctionS(cf, "inverse"));
-		cf++;
-		list.add(new FunctionS(cf, "square"));
-		cf++;
-		list.add(new FunctionS(cf, "cubic"));
-		cf++;
-		list.add(new FunctionS(cf, "power"));				
-		cf++;
-		list.add(new FunctionS(cf, "square root"));
-		cf++;
-		list.add(new FunctionS(cf, "cubic root"));
-		cf++;
-		list.add(new FunctionS(cf, "remainder"));
-		cf++;
-		list.add(new FunctionS(cf, "sine"));
-		cf++;
-		list.add(new FunctionS(cf, "cosine"));
-		cf++;
-		list.add(new FunctionS(cf, "tangent"));
-		cf++;
-		list.add(new FunctionS(cf, "sine (degrees)"));
-		cf++;
-		list.add(new FunctionS(cf, "cosine (degrees)"));
-		cf++;
-		list.add(new FunctionS(cf, "tangent (degrees)"));
-		cf++;
-		list.add(new FunctionS(cf, "arcsine"));
-		cf++;
-		list.add(new FunctionS(cf, "arccosine"));
-		cf++;
-		list.add(new FunctionS(cf, "arctangent"));
-		cf++;
-		list.add(new FunctionS(cf, "arcsine (degrees)"));
-		cf++;
-		list.add(new FunctionS(cf, "arccosine (degrees)"));
-		cf++;
-		list.add(new FunctionS(cf, "arctangent (degrees)"));
-		cf++;
-		list.add(new FunctionS(cf, "ln"));
-		cf++;
-		list.add(new FunctionS(cf, "log"));
-		cf++;
-		list.add(new FunctionS(cf, "log base x"));
-		cf++;
-		list.add(new FunctionS(cf, "exp"));
-		cf++;
-		list.add(new FunctionS(cf, "power of 10"));
-		cf++;
-		list.add(new FunctionS(cf, "pi")); //???
-		cf++;
-		list.add(new FunctionS(cf, "factorial"));
-		cf++;
-		list.add(new FunctionS(cf, "mdc"));
-		cf++;
-		list.add(new FunctionS(cf, "mmc"));		
+		list.put("plus",0);
+		list.put("minus",0);
+		list.put("times",0);
+		list.put("divide",0);
+		list.put("inverse",0);
+		list.put("square",0);
+		list.put("cubic",0);
+		list.put("power",0);				
+		list.put("sqrt",0);
+		list.put("cbrt",0);
+		list.put("mod",0);
+		list.put("sine",0);
+		list.put("cosine",0);
+		list.put("tangent",0);
+		list.put("sineD",0);
+		list.put("cosineD",0);
+		list.put("tangentD",0);
+		list.put("arcsine",0);
+		list.put("arccosine",0);
+		list.put("arctangent",0);
+		list.put("arcsineD",0);
+		list.put("arccosineD",0);
+		list.put("arctangentD",0);
+		list.put("ln",0);
+		list.put("log",0);
+		list.put("logb",0);
+		list.put("exp",0);
+		list.put("power10",0);
+		list.put("factorial",0);
+		list.put("mdc",0);
+		list.put("mmc",0);		
 	}	
 	
 	public ArrayList<FunctionS> getList() {
-		Collections.sort(list);
-		return list;
+		ArrayList<FunctionS> af = new ArrayList<FunctionS>();
+		
+		for (Map.Entry<String, Integer> e: list.entrySet()) {
+			af.add(new FunctionS(e.getKey(),e.getValue()));
+		}
+		
+		Collections.sort(af);
+		return af;
 	}
 
-	public void setList(ArrayList<FunctionS> l) {
-		list = l;
+	public void updateElement(String name) {
+		list.put(name, list.get(name)+1);
 	}
 	
-	public void updateElement(int id) {
-		FunctionS f = list.get(id);
-		int c = f.getCount();
-		f.setCount(c+1); 
-	}
-		
 }

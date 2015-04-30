@@ -210,7 +210,9 @@ public class Calculator implements Serializable {
 		// check if a computation was done
 		boolean r = false;
 		
-		switch (event.getComponent().getId()) {
+		String button = event.getComponent().getId();
+		
+		switch (button) {
 		
 		// numbers
 		case "number0": add = "0"; break;
@@ -227,139 +229,107 @@ public class Calculator implements Serializable {
 		
 		// operations
 		case "plus": add = "+"; 
-			codef = 0;
 			basicOp = true;
 			break;
 		case "minus": add = "-";
-			codef = 1;
 			basicOp = true;
 			break;
 		case "times": add = "*";
-			codef = 2;
 			basicOp = true;
 			break;
 		case "divide": add = "/"; 
-			codef = 3;
 			basicOp = true;
 			break;
 		// tirar
 		case "inverse": add = "1/";
-			codef = 4;
 			op = true;
 			break;
 		case "square": add = "^2"; 
-			codef = 5;
 			basicOp = true;
 			break;
 		case "cubic": add = "^3"; 
-			codef = 6;
 			basicOp = true;
 			break;
 		case "power": add = "^"; 
-			codef = 7;
 			basicOp = true;
 			break;
 		case "sqrt": add = "sqrt("; // boolean para fechar
-			codef = 8;
 			op = true;
 			break;
 		case "cbrt": add = "cbrt("; // boolean para fechar 
-			codef = 9;
 			op = true;
 			break;
-		case "dMod": add = "%";
-			codef = 10;
+		case "mod": add = "%";
 			basicOp = true;
 			break;
 		case "sine": add = "sin("; // boolean para fechar
-			codef = 11;
 			op = true;
 			break;
 		case "cosine": add = "cos("; // boolean para fechar
-			codef = 12;
 			op = true;
 			break;
 		case "tangent": add = "tan("; // boolean para fechar
-			codef = 13;
 			op = true;
 			break;
 		case "sineD": add = "sind("; // boolean para fechar
-			codef = 14;
 			op = true;
 			break;
 		case "cosineD": add = "cosd("; // boolean para fechar
-			codef = 15;
 			op = true;
 			break;
 		case "tangentD": add = "tand("; // boolean para fechar
-			codef = 16;
 			op = true;
 			break;
-		case "arcSine": add = "asin("; // boolean para fechar
-			codef = 17;
+		case "arcsine": add = "asin("; // boolean para fechar
 			op = true;
 			break;
-		case "arcCosine": add = "acos("; // boolean para fechar
-			codef = 18;
+		case "arccosine": add = "acos("; // boolean para fechar
 			op = true;
 			break;
-		case "arcTangent": add = "atan("; // boolean para fechar
-			codef = 19;
+		case "arctangent": add = "atan("; // boolean para fechar
 			op = true;
 			break;
 		case "arcsineD": add = "asind("; // boolean para fechar
-			codef = 20;
 			op = true;
 			break;
-		case "arcCosineD": add = "acosd("; // boolean para fechar
-			codef = 21;
+		case "arccosineD": add = "acosd("; // boolean para fechar
 			op = true;
 			break;
-		case "arcTangentD": add = "atand("; // boolean para fechar
-			codef = 22;
+		case "arctangentD": add = "atand("; // boolean para fechar
 			op = true;
 			break;
-		case "natLog": add = "log("; // boolean para fechar
-			codef = 23;
+		case "ln": add = "log("; // boolean para fechar
 			op = true;
 			break;
-		case "log10": add = "log10("; // boolean para fechar
-			codef = 24;
+		case "log": add = "log10("; // boolean para fechar
 			op = true;
 			break;
 		case "logb": add = "logb("; // boolean para meio e fechar
-			codef = 25;
 			op = true;
 			break;
 		case "exp": add = "exp("; // boolean para fechar
-			codef = 26;
 			op = true;
 			break;
 		case "power10": add = "10^";
-			codef = 27;
 			op = true;
 			break;
 		case "pi": add = "pi"; //parentesis?
-			codef = 28;
 			op = true;
 			break;
 		case "factorial": add = "!";
-			codef = 29;
 			basicOp = true;
 			break;
 		case "mdc": add = "mdc("; // boolean para meio e fechar
-			codef = 30;
 			op = true;
 			break;
 		case "mmc": add = "mmc("; // boolean para meio e fechar
-			codef = 31;
 			op = true;
 			break;
 
 		// other
 		case "lPar": add = "("; break;
 		case "rPar": add = ")"; break;
-		case "deleteL": delLast = true; break;  // não apagar se for o último, por zero
+		case "deleteL": add = "0"; delLast = true; break;  // não apagar se for o último, por zero
 		case "reset": add = "0"; clean = true; break;
 		case "result": add = result();
 			r = true;
@@ -368,10 +338,8 @@ public class Calculator implements Serializable {
 			break;
 		}
 
-		if (op || basicOp) stat.updateElement(codef); // verificar estatísticas...
+		if (op || basicOp) stat.updateElement(button); // verificar estatisticas
 		
-		// mensagem de erro com delete apaga tudo
-
 		if (expression.equals("0")) clean = !basicOp;
 
 		addToExpression(delLast,add);
@@ -379,7 +347,5 @@ public class Calculator implements Serializable {
 		clean = r;
 					
 	}
-
-	//limpar 0 e dp meter operação...
 
 }
