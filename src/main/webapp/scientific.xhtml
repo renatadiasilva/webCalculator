@@ -34,14 +34,14 @@
 				<div class="ui-grid-col-4">
 					<p:panelGrid columns="1" layout="grid">
 						<p:inputTextarea id="basicdisplay"
-							styleClass="textareabasicdisplay" 
-							value="${calculator.expression}" />
+							styleClass="textareabasicdisplay"
+							value="#{calculator.expression}" />
 						<p:column rowspan="2">
 							<h:commandButton class="btn-CCE" action="scientific"
 								actionListener="#{calculator.key}" id="reset" value="C"
 								title="reset" />
 							<h:commandButton class="btn-CCE" action="scientific"
-								actionListener="#{calculator.key}" id="deleteL" value="CE"
+								actionListener="#{calculator.key}" id="deleteL" value="&#8592;"
 								title="delete" />
 						</p:column>
 					</p:panelGrid>
@@ -82,7 +82,7 @@
 							actionListener="#{calculator.key}" id="number9" value="9"
 							title="9" />
 						<h:commandButton class="btn-op" action="scientific"
-							actionListener="#{calculator.key}" id="times" value="&times;"
+							actionListener="#{calculator.key}" id="times" value="&#215;"
 							title="multiply" />
 
 						<h:commandButton class="btn-numb" action="scientific"
@@ -92,7 +92,7 @@
 							actionListener="#{calculator.key}" id="decPoint" value="."
 							title="dot" />
 						<h:commandButton class="btn-op" action="scientific"
-							actionListener="#{calculator.key}" id="divide" value="&divide;"
+							actionListener="#{calculator.key}" id="divide" value="&#247;"
 							title="divide" />
 						<h:commandButton class="btn-op-equal" action="scientific"
 							actionListener="#{calculator.key}" id="result" value="="
@@ -111,23 +111,23 @@
 							title="inverse" />
 
 						<h:commandButton class="btn-sctf" action="scientific"
-							actionListener="#{calculator.key}" id="dMod" value=" "
+							actionListener="#{calculator.key}" id="mod" value="mod"
 							title="division remainder" />
 						<h:commandButton class="btn-sctf" action="scientific"
-							actionListener="#{calculator.key}" id="sqrt" value="&radic;"
+							actionListener="#{calculator.key}" id="sqrt" value="&#8730;"
 							title="square root" />
 						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="cbrt" value="&#8731;"
 							title="cubic root" />
 
 						<h:commandButton class="btn-sctf" action="scientific"
-							actionListener="#{calculator.key}" id="square" value="x&sup2;"
-							title="square?" />
+							actionListener="#{calculator.key}" id="square" value="x&#178;"
+							title="square" />
 						<h:commandButton class="btn-sctf" action="scientific"
-							actionListener="#{calculator.key}" id="cubic" value="x&sup3;"
+							actionListener="#{calculator.key}" id="cubic" value="x&#179;"
 							title="cubic" />
 						<h:commandButton class="btn-sctf" action="scientific"
-							actionListener="#{calculator.key}" id="power" value="x^y"
+							actionListener="#{calculator.key}" id="power" value="x&#696;"
 							title="power" />
 						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="sine" value="sin"
@@ -142,38 +142,38 @@
 							actionListener="#{calculator.key}" id="pi" value="&#960;"
 							title="pi" />
 						<h:commandButton class="btn-sctf" action="scientific"
-							actionListener="#{calculator.key}" id="arcSine" value="sin^-1"
-							title="arcSin" />
+							actionListener="#{calculator.key}" id="arcsine"
+							value="sin&#713;&sup1;" title="arc sin" />
 						<h:commandButton class="btn-sctf" action="scientific"
-							actionListener="#{calculator.key}" id="arcCosine" value="cos^-1"
-							title="arcCosin" />
+							actionListener="#{calculator.key}" id="arccosine"
+							value="cos&#713;&sup1;" title="arc cosin" />
 						<h:commandButton class="btn-sctf" action="scientific"
-							actionListener="#{calculator.key}" id="arcTangent" value="tan^-1"
-							title="arcTangent" />
+							actionListener="#{calculator.key}" id="arctangent"
+							value="tan&#713;&sup1;" title="arc tangent" />
 						<h:commandButton class="btn-sctf" action="scientific"
-							actionListener="#{calculator.key}" id="fact" value="n!"
+							actionListener="#{calculator.key}" id="factorial" value="n!"
 							title="factorial" />
 						<h:commandButton class="btn-sctf" action="scientific"
-							actionListener="#{calculator.key}" id="exp" value="e^x"
+							actionListener="#{calculator.key}" id="exp" value="e&#739;"
 							title="exponential" />
 						<h:commandButton class="btn-sctf" action="scientific"
-							actionListener="#{calculator.key}" id="power10" value="10&supx;"
-							title="power10" />
+							actionListener="#{calculator.key}" id="power10" value="10&#739;"
+							title="power of 10" />
 						<h:commandButton class="btn-sctf" action="scientific"
-							actionListener="#{calculator.key}" id="natLog" value="ln"
-							title="naturalLogarithm" />
+							actionListener="#{calculator.key}" id="ln" value="ln"
+							title="natural logarithm" />
 						<h:commandButton class="btn-sctf" action="scientific"
-							actionListener="#{calculator.key}" id="Log10" value="log"
-							title="logarithmBase10" />
+							actionListener="#{calculator.key}" id="log" value="log"
+							title="logarithm base 10" />
 						<h:commandButton class="btn-sctf" action="scientific"
-							actionListener="#{calculator.key}" id="LogX" value="log_x"
-							title="logarithmBase10X" />
+							actionListener="#{calculator.key}" id="logb" value="logb"
+							title="logarithm base b" />
 						<h:commandButton class="btn-sctf" action="scientific"
-							actionListener="#{calculator.key}" id="mdc" value="mdc"
-							title="logarithmBase10X" />
+							actionListener="#{calculator.key}" id="gdc" value="gdc"
+							title="greatest common divisor" />
 						<h:commandButton class="btn-sctf" action="scientific"
-							actionListener="#{calculator.key}" id="mmc" value="mmc"
-							title="logarithmBase10X" />
+							actionListener="#{calculator.key}" id="lcm" value="lcm"
+							title="least common multiple" />
 					</p:panelGrid>
 
 				</div>

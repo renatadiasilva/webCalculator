@@ -56,6 +56,7 @@ h3 {
 }
 
 .btn-op-equal {
+	background-color:#9d9d9d;
 	vertical-align: middle;
 	text-align: center;
 	font-size: 16pt;
@@ -71,8 +72,11 @@ h3 {
 	min-width: 69px; 
 }
 .btn-sctf{
-	font-size:12px;
-	min-height: 36px;
-	min-width: 92px;
+	
+	font-size:11px;
+	max-height: 37px;
+	min-height:36px;
+	max-width: 100px;
+	min-width: 99px;
 	
 }

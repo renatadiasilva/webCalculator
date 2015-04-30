@@ -34,67 +34,69 @@
 					</div>
 					<div class="ui-grid-col-4">
 						<p:panelGrid columns="1" layout="grid">
-							<p:inputTextarea id="basicdisplay" styleClass="textareabasicdisplay" value="#{calculator.expression}" />
+							<p:inputTextarea id="basicdisplay"
+								styleClass="textareabasicdisplay"
+								value="#{calculator.expression}" />
 							<p:column rowspan="2">
-								<h:commandButton class="btn-CCE" action = "basic"
+								<h:commandButton class="btn-CCE" action="basic"
 									actionListener="#{calculator.key}" id="reset" value="C"
 									title="reset" />
-								<h:commandButton class="btn-CCE" action = "basic"
-									actionListener="#{calculator.key}" id="deleteL" value="CE"
+								<h:commandButton class="btn-CCE" action="basic"
+									actionListener="#{calculator.key}" id="deleteL" value="&#8592;"
 									title="delete" />
 							</p:column>
 						</p:panelGrid>
 						<p:panelGrid columns="4" layout="grid" style="padding-top:5px">
-							
-							<h:commandButton class="btn-numb" action = "basic"
+
+							<h:commandButton class="btn-numb" action="basic"
 								actionListener="#{calculator.key}" id="number1" value="1"
-								 />
-							<h:commandButton class="btn-numb" action = "basic"
+								title="1" />
+							<h:commandButton class="btn-numb" action="basic"
 								actionListener="#{calculator.key}" id="number2" value="2"
 								title="2" />
-							<h:commandButton class="btn-numb" action = "basic"
+							<h:commandButton class="btn-numb" action="basic"
 								actionListener="#{calculator.key}" id="number3" value="3"
 								title="3" />
-							<h:commandButton class="btn-op" action = "basic"
+							<h:commandButton class="btn-op" action="basic"
 								actionListener="#{calculator.key}" id="plus" value="+"
 								title="plus" />
- 
-							<h:commandButton class="btn-numb" action = "basic"
+
+							<h:commandButton class="btn-numb" action="basic"
 								actionListener="#{calculator.key}" id="number4" value="4"
 								title="4" />
-							<h:commandButton class="btn-numb" action = "basic" 
+							<h:commandButton class="btn-numb" action="basic"
 								actionListener="#{calculator.key}" id="number5" value="5"
 								title="5" />
-							<h:commandButton class="btn-numb" action = "basic"
+							<h:commandButton class="btn-numb" action="basic"
 								actionListener="#{calculator.key}" id="number6" value="6"
 								title="6" />
-							<h:commandButton class="btn-op" action = "basic"
+							<h:commandButton class="btn-op" action="basic"
 								actionListener="#{calculator.key}" id="minus" value="-"
 								title="minus" />
 
-							<h:commandButton class="btn-numb" action = "basic"
+							<h:commandButton class="btn-numb" action="basic"
 								actionListener="#{calculator.key}" id="number7" value="7"
 								title="7" />
-							<h:commandButton class="btn-numb" action = "basic"
+							<h:commandButton class="btn-numb" action="basic"
 								actionListener="#{calculator.key}" id="number8" value="8"
 								title="8" />
-							<h:commandButton class="btn-numb" action = "basic" 
+							<h:commandButton class="btn-numb" action="basic"
 								actionListener="#{calculator.key}" id="number9" value="9"
 								title="9" />
-							<h:commandButton class="btn-op" action = "basic"
-								actionListener="#{calculator.key}" id="times" value="&times;"
+							<h:commandButton class="btn-op" action="basic"
+								actionListener="#{calculator.key}" id="times" value="&#215;"
 								title="multiply" />
 
-							<h:commandButton class="btn-numb" action = "basic"
+							<h:commandButton class="btn-numb" action="basic"
 								actionListener="#{calculator.key}" id="number0" value="0"
 								title="0" />
-							<h:commandButton class="btn-op" action = "basic"
+							<h:commandButton class="btn-op" action="basic"
 								actionListener="#{calculator.key}" id="decPoint" value="."
 								title="dot" />
-							<h:commandButton class="btn-op" action = "basic"
-								actionListener="#{calculator.key}" id="divide" value="&divide;"
+							<h:commandButton class="btn-op" action="basic"
+								actionListener="#{calculator.key}" id="divide" value="&#247;"
 								title="divide" />
-							<h:commandButton class="btn-op-equal" action = "basic"
+							<h:commandButton class="btn-op-equal" action="basic"
 								actionListener="#{calculator.key}" id="result" value="="
 								title="equal" />
 
