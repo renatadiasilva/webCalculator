@@ -19,7 +19,6 @@ public class Statistics {
 		list.put("minus",0);
 		list.put("times",0);
 		list.put("divide",0);
-		list.put("inverse",0);
 		list.put("square",0);
 		list.put("cubic",0);
 		list.put("power",0);				
