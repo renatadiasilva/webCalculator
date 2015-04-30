@@ -48,6 +48,8 @@
 								actionListener="#{calculator.key}" id="deleteL" value="&#8592;"
 								title="delete last digit" />
 						</p:column>
+
+
 					</p:panelGrid>
 					<p:panelGrid columns="4" layout="grid" style="padding-top:5px">
 						<h:commandButton class="btn-numb" action="scientific"
@@ -87,6 +89,19 @@
 							actionListener="#{calculator.key}" id="result" value="=" />
 
 					</p:panelGrid>
+
+					<p:panelGrid columns="2" layoute="grid" style="padding-top:5px">
+						<p:selectOneRadio id="btn-radio" value="#{calculator.key}"
+							onchange="submit()">
+							<f:selectItem itemLabel="Radians" itemValue="true"
+								itemDescription="Radians" />
+							<f:selectItem itemLabel="Degrees" itemValue="false" />
+
+						</p:selectOneRadio>
+
+					</p:panelGrid>
+
+
 					<p:panelGrid columns="4" layout="grid" style="padding-top:5px">
 						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="lPar" value="("
