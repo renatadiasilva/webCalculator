@@ -4,11 +4,10 @@ public class FunctionS implements Comparable<FunctionS>{
 	
 	private int id;
 	private String name;
-	private int count;
+	private int count = 0;
 	
 	public FunctionS(int i, String n) {
 		id = i;
-		count = 0;
 		name = n;
 	}
 	
@@ -32,8 +31,8 @@ public class FunctionS implements Comparable<FunctionS>{
 		return count;
 	}
 	
-	public void setCount(int count) {
-		this.count = count;
+	public void setCount(int c) {
+		count = c;
 	}
 
 	@Override

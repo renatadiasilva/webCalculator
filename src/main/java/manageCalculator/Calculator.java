@@ -17,7 +17,6 @@ public class Calculator implements Serializable {
 	private static final long serialVersionUID = -501006408565378935L;
 	private String expression;
 	private boolean clean;
-	private boolean error;
 	
 	@Inject
 	private Historic hist;
@@ -28,7 +27,6 @@ public class Calculator implements Serializable {
 	public Calculator() {
 		expression = "0";
 		clean = true;
-		error = false;
 	}
 
 	public String getExpression() {
@@ -56,41 +54,30 @@ public class Calculator implements Serializable {
 	}
 	
 	public void addToExpression(int code, String add) {
-		if (clean && code != 4) expression=add;
+		if (clean) expression = add;
 		else {
 			switch (code) {
 			case 0: expression += add; break;
 			case 1: expression = add; break;
-			case 2: if (expression.length() < 2) expression ="0";
+			case 2: if (expression.length() < 2) { expression = "0"; clean = false;}
 					else if (0 <= expression.length()-1) 
 						expression = expression.substring(0, expression.length()-1); break;
-			case 3: if (1 <= expression.length()) {
-						char first = expression.charAt(0);
-						if (first == '0') expression="0"; 
-						else if (first == '-') expression = expression.substring(1, expression.length());
-						else expression = "-"+expression; 
-					}
-					break;
-			case 4: expression = add; break;
 			}
 		}
 	}
 	
-	public String result(int code, String func) {
+	public String result() {
 		
 		String ex = expression, s = "";
-		Expression e = new ExpressionBuilder("0").build();
-
-		if (code != 0) {
-			if (!error) ex = func+"("+expression+")";
-			else return "Não pode calcular "+func+" de um erro!";
-		}
-			
+//		Expression e = new ExpressionBuilder("0").build();
+		
+		//codigos das funções definidas
+		
 //		func="tan";
 //		pi = 3.1415926535897932384626433832795
 //		ex = func+"(3.1415926535897932384626433832795)";
 //		ex = "10%4";
-//		ex = "cbrt(-8)";  //erro n anotar pfff cos, sin, tan, acos, asin, atan, exp, log, log10, log2
+//		ex = "cbrt(-8)";  //erro n anotar pfff
 		
 		Operator factorial = new Operator("!", 1, true, Operator.PRECEDENCE_POWER + 1) {
 
@@ -110,6 +97,20 @@ public class Calculator implements Serializable {
 		        return result;
 		    }
 		};
+
+		Function mdc = new Function("mdc", 2) {
+		    @Override
+		    public double apply(double... args) {
+		        return Math.log(args[0]) / Math.log(args[1]);
+		    }
+		};
+		
+		Function mmc = new Function("mmc", 2) {
+		    @Override
+		    public double apply(double... args) {
+		        return Math.log(args[0]) / Math.log(args[1]);
+		    }
+		};
 		
 		Function logb = new Function("logb", 2) {
 		    @Override
@@ -125,10 +126,45 @@ public class Calculator implements Serializable {
 		    }
 		};
 		
-		Function cosg = new Function("cosg", 1) {
+		Function sind = new Function("sind", 1) {
+		    @Override
+		    public double apply(double... args) {
+		    	return Math.sin(args[0]*Math.PI/180);
+		    }
+		};
+
+		Function cosd = new Function("cosd", 1) {
 		    @Override
 		    public double apply(double... args) {
 		    	return Math.cos(args[0]*Math.PI/180);
+		    }
+		};
+
+		Function tand = new Function("tand", 1) {
+		    @Override
+		    public double apply(double... args) {
+		    	return Math.tan(args[0]*Math.PI/180);
+		    }
+		};
+
+		Function asind = new Function("asind", 1) {
+		    @Override
+		    public double apply(double... args) {
+		    	return Math.asin(args[0])*180/Math.PI;
+		    }
+		};
+		
+		Function acosd = new Function("acosd", 1) {
+		    @Override
+		    public double apply(double... args) {
+		    	return Math.acos(args[0])*180/Math.PI;
+		    }
+		};
+
+		Function atand = new Function("atand", 1) {
+		    @Override
+		    public double apply(double... args) {
+		    	return Math.atan(args[0])*180/Math.PI;
 		    }
 		};
 
@@ -139,44 +175,25 @@ public class Calculator implements Serializable {
 //		e = new ExpressionBuilder("2.5!").operator(factorial).build();
 
 //		ex = "2cos(0)";
-		e = new ExpressionBuilder(ex).build();
 		
-//		e = new ExpressionBuilder("logb(8, 2)").function(logb).build();
-		
-		error = false;
-		try{
-			double r = e.evaluate();
-		
-			s = r+"";
-			if (r % 1 == 0) s = s.substring(0, s.length()-2);
+		try {
+			Expression e = new ExpressionBuilder(ex).build();
+//			e = new ExpressionBuilder("sqrt(2").build();
+			//		e = new ExpressionBuilder("logb(8, 2)").function(logb).build();
 
-	    } catch(Exception ae) {
-	    	s = ae.getMessage();
-	    	error = true;
-	    }
-//	    } catch(IllegalArgumentException ae) {
-//	    	s = ae.getMessage();;
-//	    	error = true;
-//	    }
-//		IllegalArgumentException (expressão vazia)
-		// parêntesis
-		
-		
-		
-		
-		if (s.equals("NaN")) {
-			error = true;
-			if (func == "log") s = "Erro: Logarítmo de um número não positivo!";
-			else if (func == "sqrt") s = "Erro: Raiz de número negativo!";
-			else s = "Erro: NaN!";
+			try{
+				double r = e.evaluate();
+
+				s = r+"";
+				if (r % 1 == 0) s = s.substring(0, s.length()-2);
+
+			} catch(Exception e1) {
+				s = e1.getMessage();
+			}		
+
+		} catch (Exception e2) {
+			s = e2.getMessage();
 		}
-		
-		if (s.equals("Infinity")) {
-			error = true;
-			s = "Infinito";
-		}
-		
-		// mais catchs
 		
 		// tem de se carregar duas vezes no 1/x??
 		
@@ -184,15 +201,16 @@ public class Calculator implements Serializable {
 				
 	}
 	
-	//	request (expressions) - aceder aos outros usar o inject
-	//	application (statistics)
-	//	session (historic)
-
 	public void key(ActionEvent event) {
 		String add ="";
 		
-		int code = 0, codef = 0;
-		boolean r = false, op = false;
+		int code = 0;
+		boolean r = false;
+		// use for statistics
+		int codef = 0;
+		boolean op = false;
+		// basic operations
+		boolean basicOp = false;
 		
 		switch (event.getComponent().getId()) {
 		
@@ -212,118 +230,110 @@ public class Calculator implements Serializable {
 		// operations
 		case "plus": add = "+"; 
 			codef = 0;
-			op = true;
+			basicOp = true;
 			break;
 		case "minus": add = "-";
 			codef = 1;
-			op = true;
+			basicOp = true;
 			break;
 		case "times": add = "*";
 			codef = 2;
-			op = true;
+			basicOp = true;
 			break;
 		case "divide": add = "/"; 
 			codef = 3;
-			op = true;
+			basicOp = true;
 			break;
-		case "inverse": add = result(5,"1/");
-			r = true; 
-			code = 5; 
-			hist.addToList(expression); 
+		// tirar
+		case "inverse": add = "1/";
 			codef = 4;
 			op = true;
-			break;  //tirar result
+			break;
 		case "square": add = "^2"; 
 			codef = 5;
-			op = true;
+			basicOp = true;
 			break;
 		case "cubic": add = "^3"; 
 			codef = 6;
-			op = true;
+			basicOp = true;
 			break;
 		case "power": add = "^"; 
 			codef = 7;
-			op = true;
+			basicOp = true;
 			break;
-		case "sqrt": add = result(4,"sqrt"); 
-			r = true; 
-			code = 4; 
-			hist.addToList(expression);
+		case "sqrt": add = "sqrt("; // boolean para fechar
 			codef = 8;
 			op = true;
-			break;  //tirar result ou ver exp	
-		case "cbrt": add = result(4,"cbrt"); 
-			r = true; 
-			code = 4; 
-			hist.addToList(expression);
+			break;
+		case "cbrt": add = "cbrt("; // boolean para fechar 
 			codef = 9;
 			op = true;
-			break;  //tirar result ou ver exp
+			break;
 		case "dMod": add = "%";
 			codef = 10;
-			op = true;
+			basicOp = true;
 			break;
-		case "sine": add = "sin";
+		case "sine": add = "sin("; // boolean para fechar
 			codef = 11;
 			op = true;
 			break;
-		case "cosine": add = "cos";
+		case "cosine": add = "cos("; // boolean para fechar
 			codef = 12;
 			op = true;
 			break;
-		case "tangent": add = "tan";
+		case "tangent": add = "tan("; // boolean para fechar
 			codef = 13;
 			op = true;
 			break;
-		case "sineD": add = "sin"; //mudar para degree
+		case "sineD": add = "sind("; // boolean para fechar
 			codef = 14;
 			op = true;
 			break;
-		case "cosineD": add = "cos";
+		case "cosineD": add = "cosd("; // boolean para fechar
 			codef = 15;
 			op = true;
 			break;
-		case "tangentD": add = "tan";
+		case "tangentD": add = "tand("; // boolean para fechar
 			codef = 16;
 			op = true;
 			break;
-		case "arcSine": add = "asin";
+		case "arcSine": add = "asin("; // boolean para fechar
 			codef = 17;
 			op = true;
 			break;
-		case "arcCosine": add = "acos";
+		case "arcCosine": add = "acos("; // boolean para fechar
 			codef = 18;
 			op = true;
 			break;
-		case "arcTangent": add = "atan";
+		case "arcTangent": add = "atan("; // boolean para fechar
 			codef = 19;
 			op = true;
 			break;
-		case "arcsineD": add = "asin"; //mudar para degree
+		case "arcsineD": add = "asind("; // boolean para fechar
 			codef = 20;
 			op = true;
 			break;
-		case "arcCosineD": add = "acos";
+		case "arcCosineD": add = "acosd("; // boolean para fechar
 			codef = 21;
 			op = true;
 			break;
-		case "arcTangentD": add = "atan";
+		case "arcTangentD": add = "atand("; // boolean para fechar
 			codef = 22;
 			op = true;
 			break;
-		case "natLog": add = "log";
+		case "natLog": add = "log("; // boolean para fechar
 			codef = 23;
 			op = true;
 			break;
-		case "Log10": add = "log10";
+		case "log10": add = "log10("; // boolean para fechar
 			codef = 24;
 			op = true;
 			break;
-		case "LogX": add = "log"; //mudar para função definida
+		case "logb": add = "logb("; // boolean para meio e fechar
 			codef = 25;
 			op = true;
 			break;
-		case "exp": add = "exp";
+		case "exp": add = "exp("; // boolean para fechar
 			codef = 26;
 			op = true;
 			break;
@@ -331,43 +341,44 @@ public class Calculator implements Serializable {
 			codef = 27;
 			op = true;
 			break;
-		case "pi": add = "pi"; //função definida
+		case "pi": add = "pi"; //parentesis?
 			codef = 28;
 			op = true;
 			break;
-		case "factorial": add = "!"; //função definida
+		case "factorial": add = "!";
 			codef = 29;
-			op = true;
+			basicOp = true;
 			break;
-		case "mdc": add = "mdc"; //função definida
+		case "mdc": add = "mdc("; // boolean para meio e fechar
 			codef = 30;
 			op = true;
 			break;
-		case "mmc": add = "mmc"; //função definida
+		case "mmc": add = "mmc("; // boolean para meio e fechar
 			codef = 31;
 			op = true;
 			break;
 
 		// other
 		case "lPar": add = "("; break;
-		case "rPar": add = "("; break;
-		case "deleteL": code = 2; break;
+		case "rPar": add = ")"; break;
+		case "deleteL": code = 2; break;  // não apagar se for o último, por zero
 		case "reset": add = "0"; code = 1; break;
-		case "result": add = result(0,"");
+		case "result": add = result();
 			r = true;
 			code = 1;
 			hist.addToList(expression);
 			break;
 		}
 
-		if (op && !error) stat.updateElement(codef);
+		if (op || basicOp) stat.updateElement(codef); // verificar estatísticas...
+		
+		// mensagem de erro com delete apaga tudo
 
-		// meter expressão em cima? tirar +/-
-		if (expression.equals("0") && code != 3) clean = true;
+//		if (expression.equals("0") && !basicOp) clean = true;
 
 		addToExpression(code,add);
 		
-		if (r || expression.equals("0")) clean = true;
+		if (r || expression.equals("0") && !basicOp) clean = true;
 		else clean = false;
 			
 	}
