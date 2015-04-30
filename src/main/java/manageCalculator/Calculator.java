@@ -10,6 +10,8 @@ import net.objecthunter.exp4j.function.Function;
 import net.objecthunter.exp4j.operator.Operator;
 
 import java.io.Serializable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Named
 @SessionScoped
@@ -47,15 +49,6 @@ public class Calculator implements Serializable {
 		return stat;
 	}
 
-	public void addToExpression(boolean delL, String add) {
-		if (clean) expression = add;
-		else if (delL) {
-				if (expression.length() < 2) expression = "0";
-				else expression = expression.substring(0, expression.length()-1);
-			}
-		else expression += add;
-	}
-	
 	public String result() {
 		
 		// ***** New defined Functions - net.objecthunter.exp4j *****
@@ -189,8 +182,6 @@ public class Calculator implements Serializable {
 		    }
 		};
 
-		// não contar na estatística
-		
 		// Compute the result of the expression
 		String s = "";
 		error = false;
@@ -244,16 +235,23 @@ public class Calculator implements Serializable {
 		return s;
 				
 	}
+
+	public void addToExpression(boolean delL, String add) {
+		if (clean) expression = add;
+		else if (delL) {
+				if (expression.length() < 2) expression = "0";
+				else expression = expression.substring(0, expression.length()-1);
+			}
+		else expression += add;
+	}
 	
 	public void key(ActionEvent event) {
 		String add ="";
 
 		// delete last digit/op
 		boolean delLast = false;
-		// use for statistics
+		// operations to add when zero is displayed
 		boolean op = false;
-		// basic operations
-		boolean basicOp = false;
 		// check if a computation was done
 		boolean r = false;
 		// function with more than one argument
@@ -276,37 +274,37 @@ public class Calculator implements Serializable {
 		case "decPoint": add = "."; break;
 		
 		// operations
-		case "plus": add = "+"; basicOp = true; break;
-		case "minus": add = "-"; basicOp = true; break;
-		case "times": add = "*"; basicOp = true; break;
-		case "divide": add = "/"; basicOp = true; break;
-		case "square": add = "^2"; basicOp = true; break;
-		case "cubic": add = "^3"; basicOp = true; break;
-		case "power": add = "^"; basicOp = true; break;
-		case "sqrt": add = "sqrt(";	op = true; break;
-		case "cbrt": add = "cbrt("; op = true; break;
-		case "mod": add = "%"; basicOp = true; break;
-		case "sine": add = "sin("; op = true; break;
-		case "cosine": add = "cos("; op = true; break;
-		case "tangent": add = "tan("; op = true; break;
-		case "sineD": add = "sind("; op = true;	break;
-		case "cosineD": add = "cosd("; op = true; break;
-		case "tangentD": add = "tand("; op = true; break;
-		case "arcsine": add = "asin("; op = true; break;
-		case "arccosine": add = "acos("; op = true; break;
-		case "arctangent": add = "atan("; op = true; break;
-		case "arcsineD": add = "asind("; op = true; break;
-		case "arccosineD": add = "acosd("; op = true; break;
-		case "arctangentD": add = "atand("; op = true; break;
-		case "ln": add = "log("; op = true; break;
-		case "log": add = "log10("; op = true; break;
-		case "logb": add = "logb("; op = true; break;
-		case "exp": add = "exp("; op = true; break;
-		case "power10": add = "10^"; op = true; break;
+		case "plus": add = "+"; op = true; break;
+		case "minus": add = "-"; op = true; break;
+		case "times": add = "*"; op = true; break;
+		case "divide": add = "/"; op = true; break;
+		case "square": add = "^2"; op = true; break;
+		case "cubic": add = "^3"; op = true; break;
+		case "power": add = "^"; op = true; break;
+		case "sqrt": add = "sqrt(";	break;
+		case "cbrt": add = "cbrt("; break;
+		case "mod": add = "%"; op = true; break;
+		case "sine": add = "sin("; break;
+		case "cosine": add = "cos("; break;
+		case "tangent": add = "tan("; break;
+		case "sineD": add = "sind("; break;
+		case "cosineD": add = "cosd("; break;
+		case "tangentD": add = "tand("; break;
+		case "arcsine": add = "asin("; break;
+		case "arccosine": add = "acos("; break;
+		case "arctangent": add = "atan("; break;
+		case "arcsineD": add = "asind("; break;
+		case "arccosineD": add = "acosd("; break;
+		case "arctangentD": add = "atand("; break;
+		case "ln": add = "log("; break;
+		case "log": add = "log10("; break;
+		case "logb": add = "logb("; break;
+		case "exp": add = "exp("; break;
+		case "power10": add = "10^"; break;
 		case "pi": add = "pi()"; break;
-		case "factorial": add = "!"; basicOp = true; break;
-		case "gcd": add = "gcd("; op = true; break;
-		case "lcm": add = "lcm(";  op = true; break;
+		case "factorial": add = "!"; op = true; break;
+		case "gcd": add = "gcd("; break;
+		case "lcm": add = "lcm(";  break;
 
 		// other
 		case "lPar": add = "("; break;
@@ -315,12 +313,11 @@ public class Calculator implements Serializable {
 		case "deleteL": add = "0"; delLast = true; break; 
 		case "reset": add = "0"; clean = true; break;
 		case "result": add = result(); r = true; clean = true;
-			if (!error) hist.addToList(expression); break;
+			if (!error) {hist.addToList(expression); updateStat();}
+			break;
 		}
 		
-		if (op || basicOp) stat.updateElement(button);
-		
-		if (expression.equals("0")) clean = !basicOp;
+		if (expression.equals("0")) clean = !op;
 
 		addToExpression(delLast,add);
 		
@@ -328,8 +325,79 @@ public class Calculator implements Serializable {
 					
 	}
 	
-	// Auxiliar method
-	public int myGCD(int a, int b) {
+	// Counts the number of times that an operation appear in an expression
+	public int countsOperation(String op) {
+	    Pattern p = Pattern.compile(op);
+	    Matcher m = p.matcher(expression);
+	    
+	    int count = 0;
+	    while (m.find()) {
+	    	count++;
+	    }
+	    return count;
+	}
+	
+	public void updateStat() {		
+		
+		// no conflits
+		stat.updateElement("plus", countsOperation("\\+"));
+		stat.updateElement("minus", countsOperation("\\-"));
+		stat.updateElement("times", countsOperation("\\*"));
+		stat.updateElement("divide", countsOperation("/"));
+		stat.updateElement("sqrt", countsOperation("sqrt"));
+		stat.updateElement("cbrt", countsOperation("cbrt"));
+		stat.updateElement("mod", countsOperation("%"));
+		stat.updateElement("exp", countsOperation("exp"));
+		stat.updateElement("factorial", countsOperation("\\!"));
+		stat.updateElement("gcd", countsOperation("gcd"));
+		stat.updateElement("lcm", countsOperation("lcm"));
+		
+		// power
+		int c1 = countsOperation("\\^2");
+		int c2 = countsOperation("\\^3");
+		int c3 = countsOperation("10\\^");
+		stat.updateElement("square", c1);
+		stat.updateElement("cubic", c2);
+		stat.updateElement("power10", c3);
+		stat.updateElement("power", countsOperation("\\^")-c1-c2-c3);
+		
+		// sine
+		c1 = countsOperation("asind");
+		stat.updateElement("arcsineD", c1);
+		c2 = countsOperation("asin")-c1;
+		stat.updateElement("arcsine", c2);
+		c3 = countsOperation("sind")-c1;
+		stat.updateElement("sineD", c3);
+		stat.updateElement("sine", countsOperation("sin")-c1-c2-c3);
+		
+		// cosine
+		c1 = countsOperation("acosd");
+		stat.updateElement("arccosineD", c1);
+		c2 = countsOperation("acos")-c1;
+		stat.updateElement("arccosine", c2);
+		c3 = countsOperation("cosd")-c1;
+		stat.updateElement("cosineD", c3);
+		stat.updateElement("cosine", countsOperation("cos")-c1-c2-c3);
+
+		// tangent
+		c1 = countsOperation("atand");
+		stat.updateElement("arctangentD", c1);
+		c2 = countsOperation("atan")-c1;
+		stat.updateElement("arctangent", c2);
+		c3 = countsOperation("tand")-c1;
+		stat.updateElement("tangentD", c3);
+		stat.updateElement("tangent", countsOperation("tan")-c1-c2-c3);
+		
+		// logaritmic
+		c1 = countsOperation("log10");
+		c2 = countsOperation("logb");
+		stat.updateElement("log", c1);
+		stat.updateElement("logb", c2);
+		stat.updateElement("ln", countsOperation("log")-c1-c2);
+	}
+	
+	// Auxiliar method for gcd and lcm
+	private int myGCD(int a, int b) {
 		int r;
 		while (b != 0) {
 			r = a % b;

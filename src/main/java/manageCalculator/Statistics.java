@@ -58,8 +58,8 @@ public class Statistics {
 		return af;
 	}
 
-	public void updateElement(String name) {
-		list.put(name, list.get(name)+1);
+	public void updateElement(String name, int c) {
+		list.put(name, list.get(name)+c);
 	}
 	
 }
