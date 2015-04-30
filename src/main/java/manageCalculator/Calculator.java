@@ -102,7 +102,7 @@ public class Calculator implements Serializable {
 		    @Override
 		    public double apply(double... args) {
 		        if (Math.abs(args[0]) > 1) {
-		            throw new IllegalArgumentException("The sine of an angle should be a value between -1 and 1");
+		            throw new IllegalArgumentException("The sine of an angle should be a value between -1 and 1!");
 		        }		    	
 		    	return Math.asin(args[0])*180/Math.PI;
 		    }
@@ -113,7 +113,7 @@ public class Calculator implements Serializable {
 		    @Override
 		    public double apply(double... args) {
 		        if (Math.abs(args[0]) > 1) {
-		            throw new IllegalArgumentException("The cosine of an angle should be a value between -1 and 1");
+		            throw new IllegalArgumentException("The cosine of an angle should be a value between -1 and 1!");
 		        }		    	
 		    	return Math.acos(args[0])*180/Math.PI;
 		    }
@@ -132,12 +132,12 @@ public class Calculator implements Serializable {
 		    @Override
 		    public double apply(double... args) {
 		        if (args[0] <= 0) {
-		            throw new IllegalArgumentException("The logarithm must be positive");
+		            throw new IllegalArgumentException("The logarithm must be positive!");
 		        }		    	
 		        if (args[1] <= 0) {
-		            throw new IllegalArgumentException("The logarithm base must be positive");
+		            throw new IllegalArgumentException("The logarithm base must be positive!");
 		        }		    	
-		        return Math.log(args[0]) / Math.log(args[1]);
+		        return Math.log(args[0])/Math.log(args[1]);
 		    }
 		};
 		
@@ -148,10 +148,10 @@ public class Calculator implements Serializable {
 		    public double apply(double... args) {
 		        final int arg = (int) args[0];
 		        if ((double) arg != args[0]) {
-		            throw new IllegalArgumentException("Operand for factorial has to be an integer");
+		            throw new IllegalArgumentException("Operand for factorial has to be an integer!");
 		        }
 		        if (arg < 0) {
-		            throw new IllegalArgumentException("The operand of the factorial can not be less than zero");
+		            throw new IllegalArgumentException("The operand of the factorial can not be less than zero!");
 		        }
 		        double fat = 1;
 		        for (int i = 1; i <= arg; i++) {
@@ -165,7 +165,13 @@ public class Calculator implements Serializable {
 		Function gcd = new Function("gcd", 2) {
 		    @Override
 		    public double apply(double... args) {
-		        return Math.log(args[0]) / Math.log(args[1]);
+		        int arg1 = (int) args[0];
+		        int arg2 = (int) args[1]; 
+		        if ((double) arg1 != args[0] || (double) arg2 != args[1]) {
+		            throw new IllegalArgumentException("Arguments for gcd have to be integers!");
+		        }
+		    	
+		        return myGCD(arg1, arg2);
 		    }
 		};
 		
@@ -173,7 +179,13 @@ public class Calculator implements Serializable {
 		Function lcm = new Function("lcm", 2) {
 		    @Override
 		    public double apply(double... args) {
-		        return Math.log(args[0]) / Math.log(args[1]);
+		        int arg1 = (int) args[0];
+		        int arg2 = (int) args[1]; 
+		        if ((double) arg1 != args[0] || (double) arg2 != args[1]) {
+		            throw new IllegalArgumentException("Arguments for lcm have to be integers!");
+		        }
+		        
+		        return arg1*arg2/myGCD(arg1, arg2);
 		    }
 		};
 
@@ -203,8 +215,10 @@ public class Calculator implements Serializable {
 				
 				s = r+"";
 
+				double tol = Math.pow(10, -10);
 				// if the result is very small, close to zero
-				if (Math.abs(r) < Math.pow(10, -10)) s = "0"; 
+				if (Math.abs(r) < tol) s = "0"; 
+				else if (Math.abs(Math.round(r)-r) < tol) s = Math.round(r)+"";
 				// if result is integer get ride of ".0"
 				else if (r % 1 == 0) s = s.substring(0, s.length()-2);
 				
@@ -220,10 +234,10 @@ public class Calculator implements Serializable {
 		}
 		
 		// Error Not a Number
-		if (!error && s.equals("NaN")) error = true;
+		if (!error) if (s.equals("NaN")) error = true;
 		
 		if (s == null) {
-			s = "Mismatched parentheses detected. Please check the expression";
+			s = "Mismatched parentheses detected. Please check the expression!";
 			error = true;
 		}		
 				
@@ -291,8 +305,8 @@ public class Calculator implements Serializable {
 		case "power10": add = "10^"; op = true; break;
 		case "pi": add = "pi()"; break;
 		case "factorial": add = "!"; basicOp = true; break;
-		case "mdc": add = "mdc("; op = true; break;
-		case "mmc": add = "mmc(";  op = true; break;
+		case "gcd": add = "gcd("; op = true; break;
+		case "lcm": add = "lcm(";  op = true; break;
 
 		// other
 		case "lPar": add = "("; break;
@@ -312,6 +326,18 @@ public class Calculator implements Serializable {
 		
 		clean = r;
 					
+	}
+	
+	// Auxiliar method
+	public int myGCD(int a, int b) {
+		int r;
+		while (b != 0) {
+			r = a % b;
+			a = b;
+			b = r;
+		}
+
+		return a;
 	}
 
 }

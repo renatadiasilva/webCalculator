@@ -157,11 +157,11 @@
 							actionListener="#{calculator.key}" id="logb" value="logb"
 							title="logarithm base b: log(x,b)" />
 						<h:commandButton class="btn-sctf" action="scientific"
-							actionListener="#{calculator.key}" id="gdc" value="gdc"
-							title="greatest common divisor" />
+							actionListener="#{calculator.key}" id="gcd" value="gcd"
+							title="greatest common divisor: gcd(a,b)" />
 						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="lcm" value="lcm"
-							title="least common multiple" />
+							title="least common multiple: lcm(a,b)" />
 					</p:panelGrid>
 
 				</div>
@@ -169,7 +169,7 @@
 					<h4>Statistics</h4>
 					<p:dataTable class="table" var="func"
 						value="#{calculator.stat.list}">
-						<p:column class="left-col" headerText="Name">
+						<p:column class="left-col" headerText="Operation">
 							<h:outputText value="#{func.name}" />
 						</p:column>
 
