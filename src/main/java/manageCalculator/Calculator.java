@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 @Named
 @SessionScoped
 public class Calculator implements Serializable {
+	
 	private static final long serialVersionUID = -501006408565378935L;
 	private String expression;
 	private boolean radians;
@@ -59,6 +60,7 @@ public class Calculator implements Serializable {
 		return stat;
 	}
 
+	// computes the result of the expression
 	public String result() {
 		
 		// ***** New defined Functions - net.objecthunter.exp4j *****
@@ -164,7 +166,7 @@ public class Calculator implements Serializable {
 		    }
 		};
 
-		// Greatest common divisor (mudar nome) GCD
+		// Greatest common divisor - GCD
 		Function gcd = new Function("gcd", 2) {
 		    @Override
 		    public double apply(double... args) {
@@ -178,7 +180,7 @@ public class Calculator implements Serializable {
 		    }
 		};
 		
-		// Least common multiple LCM
+		// Least common multiple - LCM
 		Function lcm = new Function("lcm", 2) {
 		    @Override
 		    public double apply(double... args) {
@@ -222,7 +224,6 @@ public class Calculator implements Serializable {
 				else if (Math.abs(Math.round(r)-r) < tol) s = Math.round(r)+"";
 				// if result is integer get ride of ".0"
 				else if (r % 1 == 0) s = s.substring(0, s.length()-2);
-				
 
 			} catch(Exception e1) {
 				s = e1.getMessage();
@@ -246,6 +247,7 @@ public class Calculator implements Serializable {
 				
 	}
 
+	// add to expression or clean
 	public void addToExpression(boolean delL, String add) {
 		if (clean) expression = add;
 		else if (delL) {
@@ -255,6 +257,7 @@ public class Calculator implements Serializable {
 		else expression += add;
 	}
 	
+	// actions for the buttons
 	public void key(ActionEvent event) {
 		String add ="";
 
@@ -264,11 +267,8 @@ public class Calculator implements Serializable {
 		boolean op = false;
 		// check if a computation was done
 		boolean r = false;
-		// function with more than one argument
 
-		String button = event.getComponent().getId();
-		
-		switch (button) {
+		switch (event.getComponent().getId()) {
 		
 		// numbers
 		case "number0": add = "0"; break;
@@ -321,9 +321,11 @@ public class Calculator implements Serializable {
 			break;
 		}
 		
+		// clean only if not a basic operation
 		if (expression.equals("0")) clean = !op;
 
-		addToExpression(delLast,add);
+		// add to expression or delete last
+		addToExpression(delLast, add);
 		
 		clean = r;
 					
@@ -341,6 +343,7 @@ public class Calculator implements Serializable {
 	    return count;
 	}
 	
+	// Updates the operations statistics
 	public void updateStat() {		
 		
 		// no conflits
