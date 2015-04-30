@@ -21,10 +21,6 @@ public class Historic implements Serializable {
 		return list;
 	}
 
-	public void setList(ArrayList<String> l) {
-		list = l;
-	}
-	
 	public void addToList(String s) {
 		list.add(s);
 	}

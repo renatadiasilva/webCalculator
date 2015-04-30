@@ -14,18 +14,10 @@ public class FunctionS implements Comparable<FunctionS>{
 		return name;
 	}
 	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
 	public int getCount() {
 		return count;
 	}
 	
-	public void setCount(int c) {
-		count = c;
-	}
-
 	@Override
 	public int compareTo(FunctionS f) {
 		if (f.count == count) return name.compareTo(f.name);

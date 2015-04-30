@@ -17,6 +17,7 @@ public class Calculator implements Serializable {
 	private static final long serialVersionUID = -501006408565378935L;
 	private String expression;
 	private boolean clean;
+	private boolean error;
 	
 	@Inject
 	private Historic hist;
@@ -27,10 +28,15 @@ public class Calculator implements Serializable {
 	public Calculator() {
 		expression = "0";
 		clean = true;
+		error = false;
 	}
 
 	public String getExpression() {
 		return expression;
+	}
+	
+	public void setExpression(String expression) {
+		this.expression = expression;
 	}
 	
 	public Historic getHist() {
@@ -52,17 +58,73 @@ public class Calculator implements Serializable {
 	
 	public String result() {
 		
-		String ex = expression, s = "";
-//		Expression e = new ExpressionBuilder("0").build();
+		// ***** New defined Functions - net.objecthunter.exp4j *****
 		
-		//codigos das funções definidas
+		// Number PI
+		Function pi = new Function("pi",0) {
+			@Override
+		    public double apply(double... args) {
+		        return Math.PI;
+		    }
+		};
 		
-//		func="tan";
-//		pi = 3.1415926535897932384626433832795
-//		ex = func+"(3.1415926535897932384626433832795)";
-//		ex = "10%4";
-//		ex = "cbrt(-8)";  //erro n anotar pfff
+		// Sine of an angle in degrees
+		Function sind = new Function("sind", 1) {
+		    @Override
+		    public double apply(double... args) {
+		    	return Math.sin(args[0]*Math.PI/180);
+		    }
+		};
+
+		// Cosine of an angle in degrees
+		Function cosd = new Function("cosd", 1) {
+		    @Override
+		    public double apply(double... args) {
+		    	return Math.cos(args[0]*Math.PI/180);
+		    }
+		};
+
+		// Tangent of an angle in degrees
+		Function tand = new Function("tand", 1) {
+		    @Override
+		    public double apply(double... args) {
+		    	return Math.tan(args[0]*Math.PI/180);
+		    }
+		};
+
+		// Arcsine of an angle in degrees
+		Function asind = new Function("asind", 1) {
+		    @Override
+		    public double apply(double... args) {
+		    	return Math.asin(args[0])*180/Math.PI;
+		    }
+		};
 		
+		// Arccosine of an angle in degrees
+		Function acosd = new Function("acosd", 1) {
+		    @Override
+		    public double apply(double... args) {
+		    	return Math.acos(args[0])*180/Math.PI;
+		    }
+		};
+
+		// Arctangent of an angle in degrees
+		Function atand = new Function("atand", 1) {
+		    @Override
+		    public double apply(double... args) {
+		    	return Math.atan(args[0])*180/Math.PI;
+		    }
+		};
+		
+		// Logarithm of base b
+		Function logb = new Function("logb", 2) {
+		    @Override
+		    public double apply(double... args) {
+		        return Math.log(args[0]) / Math.log(args[1]);
+		    }
+		};
+		
+		// Factorial
 		Operator factorial = new Operator("!", 1, true, Operator.PRECEDENCE_POWER + 1) {
 
 		    @Override
@@ -82,105 +144,80 @@ public class Calculator implements Serializable {
 		    }
 		};
 
-		Function mdc = new Function("mdc", 2) {
+		// Greatest common divisor (mudar nome) GCD
+		Function gcd = new Function("gcd", 2) {
 		    @Override
 		    public double apply(double... args) {
 		        return Math.log(args[0]) / Math.log(args[1]);
 		    }
 		};
 		
-		Function mmc = new Function("mmc", 2) {
+		// Least common multiple LCM
+		Function lcm = new Function("lcm", 2) {
 		    @Override
 		    public double apply(double... args) {
 		        return Math.log(args[0]) / Math.log(args[1]);
 		    }
 		};
+
+		// não contar na estatística
 		
-		Function logb = new Function("logb", 2) {
-		    @Override
-		    public double apply(double... args) {
-		        return Math.log(args[0]) / Math.log(args[1]);
-		    }
-		};
-		
-		Function pi = new Function("pi",0) {
-			@Override
-		    public double apply(double... args) {
-		        return Math.PI;
-		    }
-		};
-		
-		Function sind = new Function("sind", 1) {
-		    @Override
-		    public double apply(double... args) {
-		    	return Math.sin(args[0]*Math.PI/180);
-		    }
-		};
-
-		Function cosd = new Function("cosd", 1) {
-		    @Override
-		    public double apply(double... args) {
-		    	return Math.cos(args[0]*Math.PI/180);
-		    }
-		};
-
-		Function tand = new Function("tand", 1) {
-		    @Override
-		    public double apply(double... args) {
-		    	return Math.tan(args[0]*Math.PI/180);
-		    }
-		};
-
-		Function asind = new Function("asind", 1) {
-		    @Override
-		    public double apply(double... args) {
-		    	return Math.asin(args[0])*180/Math.PI;
-		    }
-		};
-		
-		Function acosd = new Function("acosd", 1) {
-		    @Override
-		    public double apply(double... args) {
-		    	return Math.acos(args[0])*180/Math.PI;
-		    }
-		};
-
-		Function atand = new Function("atand", 1) {
-		    @Override
-		    public double apply(double... args) {
-		    	return Math.atan(args[0])*180/Math.PI;
-		    }
-		};
-
-//		e = new ExpressionBuilder("pi").function(pi).build();
-		
-//		e = new ExpressionBuilder("cosg(60)").function(cosg).build();
-
-//		e = new ExpressionBuilder("2.5!").operator(factorial).build();
-
-//		ex = "2cos(0)";
+		// Compute the result of the expression
+		String s = "";
+		error = false;
 		
 		try {
-			Expression e = new ExpressionBuilder(ex).build();
-//			e = new ExpressionBuilder("sqrt(2").build();
-			//		e = new ExpressionBuilder("logb(8, 2)").function(logb).build();
+			Expression e = new ExpressionBuilder(expression)
+					.function(pi)
+					.function(sind)
+					.function(cosd)
+					.function(tand)
+					.function(asind)
+					.function(acosd)
+					.function(atand)
+					.function(logb)
+					.operator(factorial)
+					.function(gcd)
+					.function(lcm)
+					.build();
 
 			try{
 				double r = e.evaluate();
 
 				s = r+"";
+
+				// if the result is very small, close to zero
+				if (r < Math.pow(10, -10)) s = "0"; 
+
+				//
+
+				if (r+1 == Math.round(r)+1) {
+					s = Math.round(r)+"";
+//					s = s.substring(0, s.length()-2);
+				}
+					
+				// if result is integer get ride of ".0"
+//				if (r % 1 == 0) s = s.substring(0, s.length()-2);
 				
-				// if integer get ride of ".0"
-				if (r % 1 == 0) s = s.substring(0, s.length()-2);
 
 			} catch(Exception e1) {
 				s = e1.getMessage();
+				error = true;
 			}		
 
 		} catch (Exception e2) {
 			s = e2.getMessage();
+			error = true;
 		}
 		
+		// Error Not a Number
+		if (!error && s.equals("NaN")) error = true;
+		
+		if (s == null) {
+			s = "Mismatched parentheses detected. Please check the expression";
+			error = true;
+		}		
+				
 		return s;
 				
 	}
@@ -196,8 +233,6 @@ public class Calculator implements Serializable {
 		boolean basicOp = false;
 		// check if a computation was done
 		boolean r = false;
-		// check for functions
-		boolean
 		
 		String button = event.getComponent().getId();
 		
@@ -220,105 +255,43 @@ public class Calculator implements Serializable {
 		case "plus": add = "+"; basicOp = true; break;
 		case "minus": add = "-"; basicOp = true; break;
 		case "times": add = "*"; basicOp = true; break;
-		case "divide": add = "/"; 
-			basicOp = true;
-			break;
-		// tirar
-		case "inverse": add = "1/";
-			op = true;
-			break;
-		case "square": add = "^2"; 
-			basicOp = true;
-			break;
-		case "cubic": add = "^3"; 
-			basicOp = true;
-			break;
-		case "power": add = "^"; 
-			basicOp = true;
-			break;
-		case "sqrt": add = "sqrt("; // boolean para fechar
-			op = true;
-			break;
-		case "cbrt": add = "cbrt("; // boolean para fechar 
-			op = true;
-			break;
-		case "mod": add = "%";
-			basicOp = true;
-			break;
-		case "sine": add = "sin("; // boolean para fechar
-			op = true;
-			break;
-		case "cosine": add = "cos("; // boolean para fechar
-			op = true;
-			break;
-		case "tangent": add = "tan("; // boolean para fechar
-			op = true;
-			break;
-		case "sineD": add = "sind("; // boolean para fechar
-			op = true;
-			break;
-		case "cosineD": add = "cosd("; // boolean para fechar
-			op = true;
-			break;
-		case "tangentD": add = "tand("; // boolean para fechar
-			op = true;
-			break;
-		case "arcsine": add = "asin("; // boolean para fechar
-			op = true;
-			break;
-		case "arccosine": add = "acos("; // boolean para fechar
-			op = true;
-			break;
-		case "arctangent": add = "atan("; // boolean para fechar
-			op = true;
-			break;
-		case "arcsineD": add = "asind("; // boolean para fechar
-			op = true;
-			break;
-		case "arccosineD": add = "acosd("; // boolean para fechar
-			op = true;
-			break;
-		case "arctangentD": add = "atand("; // boolean para fechar
-			op = true;
-			break;
-		case "ln": add = "log("; // boolean para fechar
-			op = true;
-			break;
-		case "log": add = "log10("; // boolean para fechar
-			op = true;
-			break;
-		case "logb": add = "logb("; // boolean para meio e fechar
-			op = true;
-			break;
-		case "exp": add = "exp("; // boolean para fechar
-			op = true;
-			break;
-		case "power10": add = "10^";
-			op = true;
-			break;
-		case "pi": add = "pi"; //parentesis?
-			op = true;
-			break;
-		case "factorial": add = "!";
-			basicOp = true;
-			break;
-		case "mdc": add = "mdc("; // boolean para meio e fechar
-			op = true;
-			break;
-		case "mmc": add = "mmc("; // boolean para meio e fechar
-			op = true;
-			break;
+		case "divide": add = "/"; basicOp = true; break;
+		case "inverse": add = "1/"; op = true; break;
+		case "square": add = "^2"; basicOp = true; break;
+		case "cubic": add = "^3"; basicOp = true; break;
+		case "power": add = "^"; basicOp = true; break;
+		case "sqrt": add = "sqrt(";	op = true; break;
+		case "cbrt": add = "cbrt("; op = true; break;
+		case "mod": add = "%"; basicOp = true; break;
+		case "sine": add = "sin("; op = true; break;
+		case "cosine": add = "cos("; op = true; break;
+		case "tangent": add = "tan("; op = true; break;
+		case "sineD": add = "sind("; op = true;	break;
+		case "cosineD": add = "cosd("; op = true; break;
+		case "tangentD": add = "tand("; op = true; break;
+		case "arcsine": add = "asin("; op = true; break;
+		case "arccosine": add = "acos("; op = true; break;
+		case "arctangent": add = "atan("; op = true; break;
+		case "arcsineD": add = "asind("; op = true; break;
+		case "arccosineD": add = "acosd("; op = true; break;
+		case "arctangentD": add = "atand("; op = true; break;
+		case "ln": add = "log("; op = true; break;
+		case "log": add = "log10("; op = true; break;
+		case "logb": add = "logb("; op = true; break;
+		case "exp": add = "exp("; op = true; break;
+		case "power10": add = "10^"; op = true; break;
+		case "pi": add = "pi()"; break;
+		case "factorial": add = "!"; basicOp = true; break;
+		case "mdc": add = "mdc("; op = true; break;
+		case "mmc": add = "mmc(";  op = true; break;
 
 		// other
 		case "lPar": add = "("; break;
 		case "rPar": add = ")"; break;
 		case "deleteL": add = "0"; delLast = true; break; 
 		case "reset": add = "0"; clean = true; break;
-		case "result": add = result();
-			r = true;
-			clean = true;
-			hist.addToList(expression);
-			break;
+		case "result": add = result(); r = true; clean = true;
+			if (!error) hist.addToList(expression); break;
 		}
 
 		if (op || basicOp) stat.updateElement(button);

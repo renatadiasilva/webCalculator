@@ -44,8 +44,8 @@ public class Statistics {
 		list.put("exp",0);
 		list.put("power10",0);
 		list.put("factorial",0);
-		list.put("mdc",0);
-		list.put("mmc",0);		
+		list.put("gcd",0);
+		list.put("lcm",0);		
 	}	
 	
 	public ArrayList<FunctionS> getList() {
