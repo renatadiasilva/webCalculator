@@ -207,6 +207,8 @@ public class Calculator implements Serializable {
 		boolean op = false;
 		// basic operations
 		boolean basicOp = false;
+		// check if a computation was done
+		boolean r = false;
 		
 		switch (event.getComponent().getId()) {
 		
@@ -360,6 +362,8 @@ public class Calculator implements Serializable {
 		case "deleteL": delLast = true; break;  // não apagar se for o último, por zero
 		case "reset": add = "0"; clean = true; break;
 		case "result": add = result();
+			r = true;
+			clean = true;
 			hist.addToList(expression);
 			break;
 		}
@@ -371,6 +375,8 @@ public class Calculator implements Serializable {
 		if (expression.equals("0")) clean = !basicOp;
 
 		addToExpression(delLast,add);
+		
+		clean = r;
 					
 	}
 
