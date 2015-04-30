@@ -53,17 +53,13 @@ public class Calculator implements Serializable {
 		this.stat = stat;
 	}
 	
-	public void addToExpression(int code, String add) {
+	public void addToExpression(boolean delL, String add) {
 		if (clean) expression = add;
-		else {
-			switch (code) {
-			case 0: expression += add; break;
-			case 1: expression = add; break;
-			case 2: if (expression.length() < 2) { expression = "0"; clean = false;}
-					else if (0 <= expression.length()-1) 
-						expression = expression.substring(0, expression.length()-1); break;
+		else if (delL) {
+				if (expression.length() < 2) expression = "0";
+				else expression = expression.substring(0, expression.length()-1);
 			}
-		}
+		else expression += add;
 	}
 	
 	public String result() {
@@ -203,9 +199,9 @@ public class Calculator implements Serializable {
 	
 	public void key(ActionEvent event) {
 		String add ="";
-		
-		int code = 0;
-		boolean r = false;
+
+		// delete last digit/op
+		boolean delLast = false;
 		// use for statistics
 		int codef = 0;
 		boolean op = false;
@@ -361,11 +357,9 @@ public class Calculator implements Serializable {
 		// other
 		case "lPar": add = "("; break;
 		case "rPar": add = ")"; break;
-		case "deleteL": code = 2; break;  // não apagar se for o último, por zero
-		case "reset": add = "0"; code = 1; break;
+		case "deleteL": delLast = true; break;  // não apagar se for o último, por zero
+		case "reset": add = "0"; clean = true; break;
 		case "result": add = result();
-			r = true;
-			code = 1;
 			hist.addToList(expression);
 			break;
 		}
@@ -374,13 +368,10 @@ public class Calculator implements Serializable {
 		
 		// mensagem de erro com delete apaga tudo
 
-//		if (expression.equals("0") && !basicOp) clean = true;
+		if (expression.equals("0")) clean = !basicOp;
 
-		addToExpression(code,add);
-		
-		if (r || expression.equals("0") && !basicOp) clean = true;
-		else clean = false;
-			
+		addToExpression(delLast,add);
+					
 	}
 
 	//limpar 0 e dp meter operação...
