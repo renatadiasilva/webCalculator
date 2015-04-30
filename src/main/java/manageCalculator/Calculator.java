@@ -88,6 +88,11 @@ public class Calculator implements Serializable {
 		Function tand = new Function("tand", 1) {
 		    @Override
 		    public double apply(double... args) {
+		    	final int arg = (int) Math.abs(args[0]);
+		    	// Tangent of 90+k180 is infinity
+		        if (arg % 180 == 90) {
+		            throw new IllegalArgumentException("Infinity");
+		        }		    	
 		    	return Math.tan(args[0]*Math.PI/180);
 		    }
 		};
@@ -96,6 +101,9 @@ public class Calculator implements Serializable {
 		Function asind = new Function("asind", 1) {
 		    @Override
 		    public double apply(double... args) {
+		        if (Math.abs(args[0]) > 1) {
+		            throw new IllegalArgumentException("The sine of an angle should be a value between -1 and 1");
+		        }		    	
 		    	return Math.asin(args[0])*180/Math.PI;
 		    }
 		};
@@ -104,6 +112,9 @@ public class Calculator implements Serializable {
 		Function acosd = new Function("acosd", 1) {
 		    @Override
 		    public double apply(double... args) {
+		        if (Math.abs(args[0]) > 1) {
+		            throw new IllegalArgumentException("The cosine of an angle should be a value between -1 and 1");
+		        }		    	
 		    	return Math.acos(args[0])*180/Math.PI;
 		    }
 		};
@@ -120,6 +131,12 @@ public class Calculator implements Serializable {
 		Function logb = new Function("logb", 2) {
 		    @Override
 		    public double apply(double... args) {
+		        if (args[0] <= 0) {
+		            throw new IllegalArgumentException("The logarithm must be positive");
+		        }		    	
+		        if (args[1] <= 0) {
+		            throw new IllegalArgumentException("The logarithm base must be positive");
+		        }		    	
 		        return Math.log(args[0]) / Math.log(args[1]);
 		    }
 		};
@@ -136,11 +153,11 @@ public class Calculator implements Serializable {
 		        if (arg < 0) {
 		            throw new IllegalArgumentException("The operand of the factorial can not be less than zero");
 		        }
-		        double result = 1;
+		        double fat = 1;
 		        for (int i = 1; i <= arg; i++) {
-		            result *= i;
+		            fat *= i;
 		        }
-		        return result;
+		        return fat;
 		    }
 		};
 
@@ -183,21 +200,13 @@ public class Calculator implements Serializable {
 
 			try{
 				double r = e.evaluate();
-
+				
 				s = r+"";
 
 				// if the result is very small, close to zero
-				if (r < Math.pow(10, -10)) s = "0"; 
-
-				//
-
-				if (r+1 == Math.round(r)+1) {
-					s = Math.round(r)+"";
-//					s = s.substring(0, s.length()-2);
-				}
-					
+				if (Math.abs(r) < Math.pow(10, -10)) s = "0"; 
 				// if result is integer get ride of ".0"
-//				if (r % 1 == 0) s = s.substring(0, s.length()-2);
+				else if (r % 1 == 0) s = s.substring(0, s.length()-2);
 				
 
 			} catch(Exception e1) {
@@ -233,7 +242,8 @@ public class Calculator implements Serializable {
 		boolean basicOp = false;
 		// check if a computation was done
 		boolean r = false;
-		
+		// function with more than one argument
+
 		String button = event.getComponent().getId();
 		
 		switch (button) {
@@ -256,7 +266,6 @@ public class Calculator implements Serializable {
 		case "minus": add = "-"; basicOp = true; break;
 		case "times": add = "*"; basicOp = true; break;
 		case "divide": add = "/"; basicOp = true; break;
-		case "inverse": add = "1/"; op = true; break;
 		case "square": add = "^2"; basicOp = true; break;
 		case "cubic": add = "^3"; basicOp = true; break;
 		case "power": add = "^"; basicOp = true; break;
@@ -288,12 +297,13 @@ public class Calculator implements Serializable {
 		// other
 		case "lPar": add = "("; break;
 		case "rPar": add = ")"; break;
+		case "virg": add = ","; break;
 		case "deleteL": add = "0"; delLast = true; break; 
 		case "reset": add = "0"; clean = true; break;
 		case "result": add = result(); r = true; clean = true;
 			if (!error) hist.addToList(expression); break;
 		}
-
+		
 		if (op || basicOp) stat.updateElement(button);
 		
 		if (expression.equals("0")) clean = !basicOp;
