@@ -34,13 +34,13 @@
 					</div>
 					<div class="ui-grid-col-4">
 						<p:panelGrid columns="1" layout="grid">
-							<p:inputTextarea id="basicdisplay" styleClass="textareabasicdisplay" readonly="true" value="#{calculator.expression}" />
+							<p:inputTextarea id="basicdisplay" styleClass="textareabasicdisplay" value="#{calculator.expression}" />
 							<p:column rowspan="2">
 								<h:commandButton class="btn-CCE" action = "basic"
 									actionListener="#{calculator.key}" id="reset" value="C"
 									title="reset" />
 								<h:commandButton class="btn-CCE" action = "basic"
-									actionListener="#{calculator.key}" id="deletel" value="CE"
+									actionListener="#{calculator.key}" id="deleteL" value="CE"
 									title="delete" />
 							</p:column>
 						</p:panelGrid>
@@ -107,7 +107,7 @@
 						<h4>Estatística das operações</h4>
 						<br />
 						<ui:repeat value="#{calculator.stat.list}" var="func">
-		#{func.id} #{func.name} #{func.count} <br />
+						#{func.name} #{func.count} <br />
 						</ui:repeat>
 					</div>
 

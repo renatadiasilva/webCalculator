@@ -32,27 +32,15 @@ public class Calculator implements Serializable {
 	public String getExpression() {
 		return expression;
 	}
-
-	public void setExpression(String ex) {
-		expression = ex;
-	}
 	
 	public Historic getHist() {
 		return hist;
-	}
-
-	public void setHist(Historic hist) {
-		this.hist = hist;
 	}
 
 	public Statistics getStat() {
 		return stat;
 	}
 
-	public void setStat(Statistics stat) {
-		this.stat = stat;
-	}
-	
 	public void addToExpression(boolean delL, String add) {
 		if (clean) expression = add;
 		else if (delL) {
@@ -181,6 +169,8 @@ public class Calculator implements Serializable {
 				double r = e.evaluate();
 
 				s = r+"";
+				
+				// if integer get ride of ".0"
 				if (r % 1 == 0) s = s.substring(0, s.length()-2);
 
 			} catch(Exception e1) {
@@ -190,8 +180,6 @@ public class Calculator implements Serializable {
 		} catch (Exception e2) {
 			s = e2.getMessage();
 		}
-		
-		// tem de se carregar duas vezes no 1/x??
 		
 		return s;
 				
@@ -203,12 +191,13 @@ public class Calculator implements Serializable {
 		// delete last digit/op
 		boolean delLast = false;
 		// use for statistics
-		int codef = 0;
 		boolean op = false;
 		// basic operations
 		boolean basicOp = false;
 		// check if a computation was done
 		boolean r = false;
+		// check for functions
+		boolean
 		
 		String button = event.getComponent().getId();
 		
@@ -228,15 +217,9 @@ public class Calculator implements Serializable {
 		case "decPoint": add = "."; break;
 		
 		// operations
-		case "plus": add = "+"; 
-			basicOp = true;
-			break;
-		case "minus": add = "-";
-			basicOp = true;
-			break;
-		case "times": add = "*";
-			basicOp = true;
-			break;
+		case "plus": add = "+"; basicOp = true; break;
+		case "minus": add = "-"; basicOp = true; break;
+		case "times": add = "*"; basicOp = true; break;
 		case "divide": add = "/"; 
 			basicOp = true;
 			break;
@@ -329,7 +312,7 @@ public class Calculator implements Serializable {
 		// other
 		case "lPar": add = "("; break;
 		case "rPar": add = ")"; break;
-		case "deleteL": add = "0"; delLast = true; break;  // não apagar se for o último, por zero
+		case "deleteL": add = "0"; delLast = true; break; 
 		case "reset": add = "0"; clean = true; break;
 		case "result": add = result();
 			r = true;
@@ -338,7 +321,7 @@ public class Calculator implements Serializable {
 			break;
 		}
 
-		if (op || basicOp) stat.updateElement(button); // verificar estatisticas
+		if (op || basicOp) stat.updateElement(button);
 		
 		if (expression.equals("0")) clean = !basicOp;
 

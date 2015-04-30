@@ -28,7 +28,8 @@ public class FunctionS implements Comparable<FunctionS>{
 
 	@Override
 	public int compareTo(FunctionS f) {
-		return f.count-count;
+		if (f.count == count) return name.compareTo(f.name);
+		else return f.count-count;
 	}
 	
 }
