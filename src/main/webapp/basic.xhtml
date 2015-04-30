@@ -11,11 +11,17 @@
 
 	<link type="text/css" rel="stylesheet" href="resources/css/style.css" />
 </h:head>
-<h:body>
-	<div id="page">
+<h:body style="background-image: url('resources/images/background2.jpg');">
+
+	<div id="page" >
+
+	
 		<div id="header">
+		<br />
 			<h3>Basic Calculator</h3>
+			<h6>por aqui a cena do login (so mensagem de saudaçao?)</h6>
 		</div>
+		
 		<div id="container">
 			<h:form>
 				<div class="ui-grid ui-grid-responsive">
@@ -27,20 +33,18 @@
 						</ui:repeat>
 					</div>
 					<div class="ui-grid-col-4">
-						<p:panelGrid columns="3" layout="grid">
-							<p:commandButton class="btn-CCE"
-								actionListener="#{calculator.key}" id="reset" value="C"
-								title="reset" />
-
-							<p:inputTextarea id="basicdisplay"
-								styleClass="textareabasicdisplay" readonly="true"
-								value="#{calculator.expression}"  />
-
-							<p:commandButton class="btn-CCE"
-								actionListener="#{calculator.key}" id="deletel" value="CE"
-								title="delete" />
+						<p:panelGrid columns="1" layout="grid">
+							<p:inputTextarea readonly="true" value="#{calculator.expression}" />
+							<p:column rowspan="2">
+								<p:commandButton class="btn-CCE"
+									actionListener="#{calculator.key}" id="reset" value="C"
+									title="reset" />
+								<p:commandButton class="btn-CCE"
+									actionListener="#{calculator.key}" id="deletel" value="CE"
+									title="delete" />
+							</p:column>
 						</p:panelGrid>
-						<p:panelGrid columns="4" layout="grid">
+						<p:panelGrid columns="4" layout="grid" style="padding-top:5px">
 							<p:commandButton class="btn-numb"
 								actionListener="#{calculator.key}" id="number1" value="1"
 								title="1" />
@@ -53,6 +57,7 @@
 							<p:commandButton class="btn-op"
 								actionListener="#{calculator.key}" id="plus" value="+"
 								title="plus" />
+
 							<p:commandButton class="btn-numb"
 								actionListener="#{calculator.key}" id="number4" value="4"
 								title="4" />
@@ -65,6 +70,7 @@
 							<p:commandButton class="btn-op"
 								actionListener="#{calculator.key}" id="minus" value="-"
 								title="minus" />
+
 							<p:commandButton class="btn-numb"
 								actionListener="#{calculator.key}" id="number7" value="7"
 								title="7" />
@@ -77,6 +83,7 @@
 							<p:commandButton class="btn-op"
 								actionListener="#{calculator.key}" id="times" value="&times;"
 								title="multiply" />
+
 							<p:commandButton class="btn-numb"
 								actionListener="#{calculator.key}" id="number0" value="0"
 								title="0" />
@@ -89,10 +96,11 @@
 							<p:commandButton class="btn-op-equal"
 								actionListener="#{calculator.key}" id="result" value="="
 								title="equal" />
+
 						</p:panelGrid>
-						<p:panelGrid columns="1" layout="grid">
-							<p:link id="change" outcome="productDetail" value="Scientific">
-								<f:param name="productId" value="10" />
+						<p:panelGrid columns="1" layout="grid" style="padding-top:5px">
+							<p:link id="change" outcome="scientific" value="Change to scientific calculator">
+
 							</p:link>
 						</p:panelGrid>
 
@@ -109,6 +117,7 @@
 				</div>
 			</h:form>
 		</div>
+		
 	</div>
 </h:body>
 </html>

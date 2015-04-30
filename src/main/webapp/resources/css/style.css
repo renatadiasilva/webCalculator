@@ -1,13 +1,14 @@
 @CHARSET "ISO-8859-1";
 
 body {
-	font-size: 20px;
+	
 	text-align: center;
-	background-color: grey;
+	background-repeat: round;
 }
 
 #header {
-	background-color: lightgrey;
+	font-size:20px;
+	
 	vertical-align: middle;
 }
 
@@ -18,16 +19,16 @@ h3 {
 
 #change {
 	font-style: italic;
-	font-size: 10px;
+	font-size: 15px;
 	font-color: blue;
 }
 
 .ui-widget-content {
-	border-color: lightgrey;
+	border-color: grey;
 }
 
 .ui-panelgrid .ui-panelgrid-cell {
-	border-color: lightgrey;
+	border-color: grey;
 }
 .ui-grid-row{
 	align-items:baseline;
@@ -69,8 +70,13 @@ h3 {
 	min-width: 99px;
 }
 .btn-CCE{
-	
+	font-size:12px;
 	min-height: 39px;
 	min-width: 69px; 
+}
+.btn-sctf{
+	font-size:12px;
+	min-height: 36px;
+	min-width: 92px;
 	
 }
