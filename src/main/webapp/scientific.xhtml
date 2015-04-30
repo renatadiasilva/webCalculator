@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -13,19 +13,19 @@
 <h:body
 	style="background-image: url('resources/images/grey_background.jpg'); ">
 	<div id="page">
-
 		<div id="header">
 			<br />
 			<h3>Scientific Calculator</h3>
+			<p:link id="change" outcome="basic"
+				value="Change to basic calculator">
+			</p:link>
 		</div>
-		<h6>por aqui a cena do login (so mensagem de saudaçao?)</h6>
 	</div>
-
 	<div id="container">
 		<h:form>
 			<div class="ui-grid ui-grid-responsive">
 				<div class="ui-grid-col-4">
-					<h3>Histórico das operações</h3>
+					<h4>Histórico das operações</h4>
 					<br />
 					<ui:repeat value="#{calculator.hist.list}" var="exp">
 		#{exp}<br />
@@ -33,145 +33,149 @@
 				</div>
 				<div class="ui-grid-col-4">
 					<p:panelGrid columns="1" layout="grid">
-						<p:inputTextarea readonly="true" value="#{calculator.expression}" />
+						<p:inputTextarea id="basicdisplay"
+							styleClass="textareabasicdisplay" readonly="true"
+							value="${calculator.expression}" />
 						<p:column rowspan="2">
-							<p:commandButton class="btn-CCE"
+							<h:commandButton class="btn-CCE" action="scientific"
 								actionListener="#{calculator.key}" id="reset" value="C"
 								title="reset" />
-							<p:commandButton class="btn-CCE"
+							<h:commandButton class="btn-CCE" action="scientific"
 								actionListener="#{calculator.key}" id="deletel" value="CE"
 								title="delete" />
 						</p:column>
 					</p:panelGrid>
 					<p:panelGrid columns="4" layout="grid" style="padding-top:5px">
-						<p:commandButton class="btn-numb"
+						<h:commandButton class="btn-numb" action="scientific"
 							actionListener="#{calculator.key}" id="number1" value="1"
 							title="1" />
-						<p:commandButton class="btn-numb"
+						<h:commandButton class="btn-numb" action="scientific"
 							actionListener="#{calculator.key}" id="number2" value="2"
 							title="2" />
-						<p:commandButton class="btn-numb"
+						<h:commandButton class="btn-numb" action="scientific"
 							actionListener="#{calculator.key}" id="number3" value="3"
 							title="3" />
-						<p:commandButton class="btn-op" actionListener="#{calculator.key}"
-							id="plus" value="+" title="plus" />
+						<h:commandButton class="btn-op" action="scientific"
+							actionListener="#{calculator.key}" id="plus" value="+"
+							title="plus" />
 
-						<p:commandButton class="btn-numb"
+						<h:commandButton class="btn-numb" action="scientific"
 							actionListener="#{calculator.key}" id="number4" value="4"
 							title="4" />
-						<p:commandButton class="btn-numb"
+						<h:commandButton class="btn-numb" action="scientific"
 							actionListener="#{calculator.key}" id="number5" value="5"
 							title="5" />
-						<p:commandButton class="btn-numb"
+						<h:commandButton class="btn-numb" action="scientific"
 							actionListener="#{calculator.key}" id="number6" value="6"
 							title="6" />
-						<p:commandButton class="btn-op" actionListener="#{calculator.key}"
-							id="minus" value="-" title="minus" />
+						<h:commandButton class="btn-op" action="scientific"
+							actionListener="#{calculator.key}" id="minus" value="-"
+							title="minus" />
 
-						<p:commandButton class="btn-numb"
+						<h:commandButton class="btn-numb" action="scientific"
 							actionListener="#{calculator.key}" id="number7" value="7"
 							title="7" />
-						<p:commandButton class="btn-numb"
+						<h:commandButton class="btn-numb" action="scientific"
 							actionListener="#{calculator.key}" id="number8" value="8"
 							title="8" />
-						<p:commandButton class="btn-numb"
+						<h:commandButton class="btn-numb" action="scientific"
 							actionListener="#{calculator.key}" id="number9" value="9"
 							title="9" />
-						<p:commandButton class="btn-op" actionListener="#{calculator.key}"
-							id="times" value="&times;" title="multiply" />
+						<h:commandButton class="btn-op" action="scientific"
+							actionListener="#{calculator.key}" id="times" value="&times;"
+							title="multiply" />
 
-						<p:commandButton class="btn-numb"
+						<h:commandButton class="btn-numb" action="scientific"
 							actionListener="#{calculator.key}" id="number0" value="0"
 							title="0" />
-						<p:commandButton class="btn-op" actionListener="#{calculator.key}"
-							id="decPoint" value="." title="dot" />
-						<p:commandButton class="btn-op" actionListener="#{calculator.key}"
-							id="divide" value="&divide;" title="divide" />
-						<p:commandButton class="btn-op-equal"
+						<h:commandButton class="btn-op" action="scientific"
+							actionListener="#{calculator.key}" id="decPoint" value="."
+							title="dot" />
+						<h:commandButton class="btn-op" action="scientific"
+							actionListener="#{calculator.key}" id="divide" value="&divide;"
+							title="divide" />
+						<h:commandButton class="btn-op-equal" action="scientific"
 							actionListener="#{calculator.key}" id="result" value="="
 							title="equal" />
 
 					</p:panelGrid>
 					<p:panelGrid columns="4" layout="grid" style="padding-top:5px">
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="lPar" value="("
 							title="parenteses esquerdo?" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="rPar" value=")"
 							title="parenteses direito?" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="inverse" value="1/x"
 							title="inverse" />
 
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="dMod" value=" "
 							title="division remainder" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="sqrt" value="&radic;"
 							title="square root" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="cbrt" value="&#8731;"
 							title="cubic root" />
 
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="square" value="x&sup2;"
 							title="square?" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="cubic" value="x&sup3;"
 							title="cubic" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="power" value="x^y"
 							title="power" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="sine" value="sin"
 							title="sin" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="cosine" value="cos"
 							title="cosin" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="tangent" value="tan"
 							title="tangent" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="pi" value="&#960;"
 							title="pi" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="arcSine" value="sin^-1"
 							title="arcSin" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="arcCosine" value="cos^-1"
 							title="arcCosin" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="arcTangent" value="tan^-1"
 							title="arcTangent" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="fact" value="n!"
 							title="factorial" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="exp" value="e^x"
 							title="exponential" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="power10" value="10&supx;"
 							title="power10" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="natLog" value="ln"
 							title="naturalLogarithm" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="Log10" value="log"
 							title="logarithmBase10" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="LogX" value="log_x"
 							title="logarithmBase10X" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="mdc" value="mdc"
 							title="logarithmBase10X" />
-						<p:commandButton class="btn-sctf"
+						<h:commandButton class="btn-sctf" action="scientific"
 							actionListener="#{calculator.key}" id="mmc" value="mmc"
 							title="logarithmBase10X" />
 					</p:panelGrid>
-					<p:panelGrid columns="1" layout="grid" style="padding-top:5px">
-						<p:link id="change" outcome="basic" value="Change to basic calculator">
-						</p:link>
-					</p:panelGrid>
+
 				</div>
 				<div class="ui-grid-col-4">
 					<h4>Estatística das operações</h4>

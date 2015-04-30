@@ -11,22 +11,22 @@
 
 	<link type="text/css" rel="stylesheet" href="resources/css/style.css" />
 </h:head>
-<h:body style="background-image: url('resources/images/background2.jpg');">
+<h:body
+	style="background-image: url('resources/images/background2.jpg');">
 
-	<div id="page" >
-
-	
+	<div id="page">
 		<div id="header">
-		<br />
+			<br />
 			<h3>Basic Calculator</h3>
-			<h6>por aqui a cena do login (so mensagem de saudaçao?)</h6>
+			<p:link id="change" outcome="scientific"
+				value="Change to scientific calculator">
+			</p:link>
 		</div>
-		
 		<div id="container">
 			<h:form>
 				<div class="ui-grid ui-grid-responsive">
 					<div class="ui-grid-col-4">
-						<h3>Histórico das operações</h3>
+						<h4>Histórico das operações</h4>
 						<br />
 						<ui:repeat value="#{calculator.hist.list}" var="exp">
 		#{exp}<br />
@@ -34,75 +34,72 @@
 					</div>
 					<div class="ui-grid-col-4">
 						<p:panelGrid columns="1" layout="grid">
-							<p:inputTextarea readonly="true" value="#{calculator.expression}" />
+							<p:inputTextarea id="basicdisplay" styleClass="textareabasicdisplay" readonly="true" value="#{calculator.expression}" />
 							<p:column rowspan="2">
-								<p:commandButton class="btn-CCE"
+								<h:commandButton class="btn-CCE" action = "basic"
 									actionListener="#{calculator.key}" id="reset" value="C"
 									title="reset" />
-								<p:commandButton class="btn-CCE"
+								<h:commandButton class="btn-CCE" action = "basic"
 									actionListener="#{calculator.key}" id="deletel" value="CE"
 									title="delete" />
 							</p:column>
 						</p:panelGrid>
 						<p:panelGrid columns="4" layout="grid" style="padding-top:5px">
-							<p:commandButton class="btn-numb"
+							
+							<h:commandButton class="btn-numb" action = "basic"
 								actionListener="#{calculator.key}" id="number1" value="1"
-								title="1" />
-							<p:commandButton class="btn-numb"
+								 />
+							<h:commandButton class="btn-numb" action = "basic"
 								actionListener="#{calculator.key}" id="number2" value="2"
 								title="2" />
-							<p:commandButton class="btn-numb"
+							<h:commandButton class="btn-numb" action = "basic"
 								actionListener="#{calculator.key}" id="number3" value="3"
 								title="3" />
-							<p:commandButton class="btn-op"
+							<h:commandButton class="btn-op" action = "basic"
 								actionListener="#{calculator.key}" id="plus" value="+"
 								title="plus" />
-
-							<p:commandButton class="btn-numb"
+ 
+							<h:commandButton class="btn-numb" action = "basic"
 								actionListener="#{calculator.key}" id="number4" value="4"
 								title="4" />
-							<p:commandButton class="btn-numb"
+							<h:commandButton class="btn-numb" action = "basic" 
 								actionListener="#{calculator.key}" id="number5" value="5"
 								title="5" />
-							<p:commandButton class="btn-numb"
+							<h:commandButton class="btn-numb" action = "basic"
 								actionListener="#{calculator.key}" id="number6" value="6"
 								title="6" />
-							<p:commandButton class="btn-op"
+							<h:commandButton class="btn-op" action = "basic"
 								actionListener="#{calculator.key}" id="minus" value="-"
 								title="minus" />
 
-							<p:commandButton class="btn-numb"
+							<h:commandButton class="btn-numb" action = "basic"
 								actionListener="#{calculator.key}" id="number7" value="7"
 								title="7" />
-							<p:commandButton class="btn-numb"
+							<h:commandButton class="btn-numb" action = "basic"
 								actionListener="#{calculator.key}" id="number8" value="8"
 								title="8" />
-							<p:commandButton class="btn-numb"
+							<h:commandButton class="btn-numb" action = "basic" 
 								actionListener="#{calculator.key}" id="number9" value="9"
 								title="9" />
-							<p:commandButton class="btn-op"
+							<h:commandButton class="btn-op" action = "basic"
 								actionListener="#{calculator.key}" id="times" value="&times;"
 								title="multiply" />
 
-							<p:commandButton class="btn-numb"
+							<h:commandButton class="btn-numb" action = "basic"
 								actionListener="#{calculator.key}" id="number0" value="0"
 								title="0" />
-							<p:commandButton class="btn-op"
+							<h:commandButton class="btn-op" action = "basic"
 								actionListener="#{calculator.key}" id="decPoint" value="."
 								title="dot" />
-							<p:commandButton class="btn-op"
+							<h:commandButton class="btn-op" action = "basic"
 								actionListener="#{calculator.key}" id="divide" value="&divide;"
 								title="divide" />
-							<p:commandButton class="btn-op-equal"
+							<h:commandButton class="btn-op-equal" action = "basic"
 								actionListener="#{calculator.key}" id="result" value="="
 								title="equal" />
 
 						</p:panelGrid>
-						<p:panelGrid columns="1" layout="grid" style="padding-top:5px">
-							<p:link id="change" outcome="scientific" value="Change to scientific calculator">
 
-							</p:link>
-						</p:panelGrid>
 
 					</div>
 
@@ -117,7 +114,7 @@
 				</div>
 			</h:form>
 		</div>
-		
+
 	</div>
 </h:body>
 </html>

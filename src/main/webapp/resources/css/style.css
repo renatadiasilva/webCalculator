@@ -35,7 +35,6 @@ h3 {
 }
 .btn-op {
 	vertical-align: middle;
-	border-color: red;
 	text-align: center;
 	font-size: 16pt;
 	font-weight: bold;
@@ -58,9 +57,6 @@ h3 {
 
 .btn-op-equal {
 	vertical-align: middle;
-	border-color: blue;
-		background-color:blue;
-	
 	text-align: center;
 	font-size: 16pt;
 	font-weight: bold;
