@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 public class Calculator implements Serializable {
 	private static final long serialVersionUID = -501006408565378935L;
 	private String expression;
+	private boolean radians;
 	private boolean clean;
 	private boolean error;
 	
@@ -29,6 +30,7 @@ public class Calculator implements Serializable {
 	
 	public Calculator() {
 		expression = "0";
+		radians = true;
 		clean = true;
 		error = false;
 	}
@@ -41,6 +43,14 @@ public class Calculator implements Serializable {
 		this.expression = expression;
 	}
 	
+	public boolean isRadians() {
+		return radians;
+	}
+
+	public void setRadians(boolean radians) {
+		this.radians = radians;
+	}
+
 	public Historic getHist() {
 		return hist;
 	}
@@ -284,18 +294,12 @@ public class Calculator implements Serializable {
 		case "sqrt": add = "sqrt(";	break;
 		case "cbrt": add = "cbrt("; break;
 		case "mod": add = "%"; op = true; break;
-		case "sine": add = "sin("; break;
-		case "cosine": add = "cos("; break;
-		case "tangent": add = "tan("; break;
-		case "sineD": add = "sind("; break;
-		case "cosineD": add = "cosd("; break;
-		case "tangentD": add = "tand("; break;
-		case "arcsine": add = "asin("; break;
-		case "arccosine": add = "acos("; break;
-		case "arctangent": add = "atan("; break;
-		case "arcsineD": add = "asind("; break;
-		case "arccosineD": add = "acosd("; break;
-		case "arctangentD": add = "atand("; break;
+		case "sine": if (radians) add = "sin("; else add = "sind("; break;
+		case "cosine": if (radians) add = "cos("; else add = "cosd("; break;
+		case "tangent": if (radians) add = "tan("; else add = "tand("; break;
+		case "arcsine": if (radians) add = "asin("; else add = "asind("; break;
+		case "arccosine": if (radians) add = "acos("; else add = "acosd("; break;
+		case "arctangent": if (radians) add = "atan("; else add = "atand("; break;
 		case "ln": add = "log("; break;
 		case "log": add = "log10("; break;
 		case "logb": add = "logb("; break;
