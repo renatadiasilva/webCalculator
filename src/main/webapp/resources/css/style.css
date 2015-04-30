@@ -7,20 +7,26 @@ body {
 }
 
 #header {
-	font-size:20px;
 	
-	vertical-align: middle;
+	height: 100px;
+	
+	font-size:20px;
+	padding-bottom: 5px;
+	
+}
+#titulo{
+	margin-top:5px;
+	font-family: Arial,sans-serif;
+	font-style: italic;
+	font-weight: bold;
 }
 
-h3 {
-	font-family: cursive;
-	font-style: italic;
-}
 
 #change {
 	font-style: italic;
 	font-size: 15px;
 	font-color: blue;
+	padding-bottom: 10px;
 }
 
 .ui-widget-content {
